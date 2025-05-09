@@ -87,7 +87,7 @@ export default function TimeInterpretation({
               className="flex-1 py-3 px-4 font-medium data-[state=active]:tab-active data-[state=active]:shadow-none rounded-none"
             >
               <svg className="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-              Numerology
+              {t('interpretation.numerologyTab')}
             </TabsTrigger>
           </TabsList>
           
@@ -146,7 +146,7 @@ export default function TimeInterpretation({
                   {interpretation.angel.message}
                 </p>
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="font-medium text-primary mb-2">Divine Guidance:</h4>
+                  <h4 className="font-medium text-primary mb-2">{t('interpretation.divineGuidance')}:</h4>
                   <p className="text-mediumgray italic">
                     {interpretation.angel.guidance}
                   </p>
@@ -178,13 +178,13 @@ export default function TimeInterpretation({
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div className="bg-gray-50 p-3 rounded-lg">
-                    <h4 className="font-medium text-primary mb-1">Root Number</h4>
+                    <h4 className="font-medium text-primary mb-1">{t('interpretation.rootNumber')}</h4>
                     <p className="text-mediumgray">
                       {interpretation.numerology.rootNumber}
                     </p>
                   </div>
                   <div className="bg-gray-50 p-3 rounded-lg">
-                    <h4 className="font-medium text-primary mb-1">Mirror Amplification</h4>
+                    <h4 className="font-medium text-primary mb-1">{t('interpretation.mirrorAmplification')}</h4>
                     <p className="text-mediumgray">
                       {interpretation.numerology.mirrorEffect}
                     </p>
@@ -201,17 +201,17 @@ export default function TimeInterpretation({
             {isLoggedIn ? (
               <Button onClick={handleSaveInterpretation} className="w-full bg-primary text-white py-6 hover:bg-secondary transition-colors">
                 <Bookmark className="h-4 w-4 mr-2" />
-                Save to My History
+                {t('interpretation.saveButton')}
               </Button>
             ) : (
               <>
                 <Button disabled className="w-full bg-primary text-white py-6 transition-colors opacity-70 mb-2">
                   <Bookmark className="h-4 w-4 mr-2" />
-                  Save to My History
+                  {t('interpretation.saveButton')}
                 </Button>
                 <p className="text-center text-sm text-mediumgray">
-                  <button onClick={onShowLogin} className="text-primary hover:underline">Log in</button> or{' '}
-                  <button onClick={onShowSignup} className="text-primary hover:underline">sign up</button> to save interpretations
+                  <button onClick={onShowLogin} className="text-primary hover:underline">{t('auth.login')}</button> {t('common.or')}{' '}
+                  <button onClick={onShowSignup} className="text-primary hover:underline">{t('auth.signup')}</button> {t('interpretation.toSave')}
                 </p>
               </>
             )}
