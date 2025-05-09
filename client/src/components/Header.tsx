@@ -66,8 +66,10 @@ export default function Header() {
               className="bg-white bg-opacity-20 hover:bg-opacity-30 border-0 text-white"
             >
               <History className="h-4 w-4 md:mr-1" />
-              <span className="hidden md:inline">History</span>
+              <span className="hidden md:inline">{t('header.historyButton')}</span>
             </Button>
+            
+            <LanguageSwitcher />
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -80,30 +82,31 @@ export default function Header() {
               <DropdownMenuContent align="end">
                 <DropdownMenuItem className="md:hidden" onClick={handleShowHistory}>
                   <History className="h-4 w-4 mr-2" />
-                  <span>History</span>
+                  <span>{t('header.historyButton')}</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="md:hidden" />
                 <DropdownMenuItem onClick={handleLogout}>
                   <LogOut className="h-4 w-4 mr-2" />
-                  <span>Log out</span>
+                  <span>{t('header.logoutButton')}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
         ) : (
           <div className="flex items-center">
+            <LanguageSwitcher />
             <Button
               onClick={handleShowLoginModal}
               variant="ghost"
               className="text-sm md:text-base bg-white bg-opacity-20 hover:bg-opacity-30 text-white mr-2"
             >
-              Log In
+              {t('header.loginButton')}
             </Button>
             <Button
               onClick={handleShowSignupModal}
               className="text-sm md:text-base bg-accent text-dark hover:bg-opacity-90"
             >
-              Sign Up
+              {t('header.signupButton')}
             </Button>
           </div>
         )}

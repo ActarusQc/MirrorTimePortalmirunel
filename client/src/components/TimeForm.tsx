@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -6,19 +7,21 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 
-const timeFormSchema = z.object({
+const getTimeFormSchema = (t: any) => z.object({
   time: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, {
-    message: "Please enter a valid time in 24-hour format (e.g., 10:10)"
+    message: t('errors.invalidTime')
   })
 });
-
-type TimeFormValues = z.infer<typeof timeFormSchema>;
 
 interface TimeFormProps {
   onSubmit: (time: string) => void;
 }
 
 export default function TimeForm({ onSubmit }: TimeFormProps) {
+  const { t } = useTranslation();
+  const timeFormSchema = getTimeFormSchema(t);
+  type TimeFormValues = z.infer<typeof timeFormSchema>;
+  
   const form = useForm<TimeFormValues>({
     resolver: zodResolver(timeFormSchema),
     defaultValues: {

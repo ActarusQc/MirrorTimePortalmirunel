@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import TimeForm from "@/components/TimeForm";
 import TimeResult from "@/components/TimeResult";
 import TimeInterpretation from "@/components/TimeInterpretation";
@@ -14,6 +15,7 @@ export default function Home() {
   const [showSignup, setShowSignup] = useState(false);
   const { isLoggedIn } = useAuth();
   const { interpretation, timeType } = useTimeInterpretation(time);
+  const { t } = useTranslation();
 
   const handleTimeSubmit = (timeValue: string) => {
     setTime(timeValue);
@@ -34,8 +36,8 @@ export default function Home() {
       {/* Time input section */}
       <section className="max-w-md mx-auto mb-10">
         <div className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-playfair font-bold text-dark mb-2">Discover the Meaning</h2>
-          <p className="text-mediumgray">Enter any time to reveal its hidden spiritual message</p>
+          <h2 className="text-2xl md:text-3xl font-playfair font-bold text-dark mb-2">{t('home.title')}</h2>
+          <p className="text-mediumgray">{t('home.subtitle')}</p>
         </div>
         
         <TimeForm onSubmit={handleTimeSubmit} />
