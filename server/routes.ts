@@ -49,27 +49,59 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // History routes
   app.post("/api/history", async (req, res) => {
     try {
-      // Extract fields from request body
-      const { thoughts, details, ...requiredData } = req.body;
+      console.log("Received request to save history item");
       
-      // Prepare history data with thought if provided
-      const historyData = {
-        ...requiredData,
-        // Only include thoughts if it has content
-        ...(thoughts && thoughts.trim() ? { thoughts } : {}),
-        // Convert details object to JSON string with max 5000 chars
-        details: details ? JSON.stringify(details).substring(0, 5000) : null
+      // Extract data from the request body
+      const { userId, time, type, thoughts, details } = req.body;
+      
+      console.log("Request data:", { 
+        userId, time, type, 
+        hasThoughts: thoughts ? "yes" : "no", 
+        hasDetails: details ? "yes" : "no" 
+      });
+      
+      // Prepare the data for database insertion
+      let historyData = {
+        userId,
+        time,
+        type
       };
       
-      // Validate with zod schema
-      const validHistoryData = insertHistoryItemSchema.parse(historyData);
+      // Add thoughts if provided
+      if (thoughts && thoughts.trim()) {
+        historyData = { ...historyData, thoughts };
+      }
       
-      // Create history item
-      const historyItem = await storage.createHistoryItem(validHistoryData);
+      // Convert details to string if provided (limit size to avoid DB issues)
+      if (details) {
+        try {
+          const detailsStr = typeof details === 'string' 
+            ? details 
+            : JSON.stringify(details);
+            
+          historyData = { 
+            ...historyData, 
+            details: detailsStr.substring(0, 5000) 
+          };
+        } catch (e) {
+          console.error("Error stringifying details:", e);
+        }
+      }
       
-      return res.status(201).json(historyItem);
+      console.log("Prepared history data");
+      
+      // Validate the data against the schema
+      const validatedData = insertHistoryItemSchema.parse(historyData);
+      console.log("Validation successful");
+      
+      // Save to database
+      const savedItem = await storage.createHistoryItem(validatedData);
+      console.log("Item saved to database");
+      
+      return res.status(201).json(savedItem);
     } catch (error) {
       if (error instanceof z.ZodError) {
+        console.error("Validation error:", error.message);
         return res.status(400).json({ message: error.message });
       }
       console.error("Error saving history:", error);
