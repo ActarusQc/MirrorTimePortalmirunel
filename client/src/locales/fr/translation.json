@@ -1,0 +1,77 @@
+{
+  "header": {
+    "loginButton": "Connexion",
+    "signupButton": "S'inscrire",
+    "historyButton": "Historique",
+    "logoutButton": "Déconnexion"
+  },
+  "footer": {
+    "copyright": "© 2025 MirrorTime. Tous droits réservés."
+  },
+  "home": {
+    "title": "Découvrez la Signification",
+    "subtitle": "Entrez une heure pour révéler son message spirituel caché",
+    "timeLabel": "Entrez l'heure (format 24h)",
+    "timeInputPlaceholder": "HH:MM",
+    "saveToHistory": "Enregistrer dans Mon Historique",
+    "loginToSave": "Connectez-vous ou inscrivez-vous pour sauvegarder les interprétations"
+  },
+  "timeResults": {
+    "mirrorHour": "Heure Miroir",
+    "reversedHour": "Heure Inversée",
+    "regularHour": "Heure Normale"
+  },
+  "interpretation": {
+    "spiritualTab": "Signification Spirituelle",
+    "angelTab": "Message de l'Ange",
+    "numerologyTab": "Numérologie",
+    "divineGuidance": "Guidance Divine:",
+    "rootNumber": "Nombre Racine",
+    "mirrorAmplification": "Amplification du Miroir"
+  },
+  "auth": {
+    "loginTitle": "Connexion",
+    "signupTitle": "Créer un Compte",
+    "username": "Nom d'utilisateur",
+    "email": "Email",
+    "password": "Mot de passe",
+    "fullName": "Nom complet",
+    "forgotPassword": "Mot de passe oublié?",
+    "loginButton": "Se Connecter",
+    "loggingIn": "Connexion en cours...",
+    "signupButton": "Créer un Compte",
+    "creatingAccount": "Création du compte...",
+    "noAccount": "Vous n'avez pas de compte?",
+    "signupLink": "S'inscrire",
+    "hasAccount": "Vous avez déjà un compte?",
+    "loginLink": "Se connecter",
+    "passwordHint": "Doit contenir au moins 8 caractères"
+  },
+  "history": {
+    "title": "Votre Historique",
+    "closeButton": "Fermer",
+    "emptyState": "Vous n'avez pas encore sauvegardé d'interprétations",
+    "deleteConfirmTitle": "Supprimer l'interprétation",
+    "deleteConfirmMessage": "Êtes-vous sûr de vouloir supprimer cette interprétation de votre historique? Cette action ne peut pas être annulée.",
+    "cancelButton": "Annuler",
+    "deleteButton": "Supprimer"
+  },
+  "toast": {
+    "saveSuccess": "Enregistré dans l'Historique",
+    "saveDescription": "L'interprétation pour {{time}} a été enregistrée dans votre historique.",
+    "loginSuccess": "Succès",
+    "loginDescription": "Vous vous êtes connecté avec succès",
+    "accountCreated": "Compte Créé",
+    "accountCreatedDescription": "Votre compte a été créé avec succès"
+  },
+  "errors": {
+    "invalidTime": "Veuillez entrer une heure valide au format 24 heures (par exemple, 10:10)",
+    "invalidCredentials": "Nom d'utilisateur ou mot de passe invalide",
+    "usernameTaken": "Ce nom d'utilisateur est déjà pris",
+    "emailInUse": "Cet email est déjà utilisé"
+  },
+  "language": {
+    "english": "Anglais",
+    "french": "Français"
+  }
+}

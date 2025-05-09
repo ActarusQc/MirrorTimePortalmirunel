@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useLocation } from 'wouter';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import LoginModal from '@/components/auth/LoginModal';
 import SignupModal from '@/components/auth/SignupModal';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { LogOut, History, Clock } from 'lucide-react';
 import { 
   DropdownMenu,
@@ -19,6 +21,7 @@ export default function Header() {
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const { isLoggedIn, user, logout } = useAuth();
+  const { t } = useTranslation();
   
   const handleShowLoginModal = () => {
     setShowLogin(true);

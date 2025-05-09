@@ -1,0 +1,77 @@
+{
+  "header": {
+    "loginButton": "Log In",
+    "signupButton": "Sign Up",
+    "historyButton": "History",
+    "logoutButton": "Log out"
+  },
+  "footer": {
+    "copyright": "© 2025 MirrorTime. All rights reserved."
+  },
+  "home": {
+    "title": "Discover the Meaning",
+    "subtitle": "Enter any time to reveal its hidden spiritual message",
+    "timeLabel": "Enter Time (24-hour format)",
+    "timeInputPlaceholder": "HH:MM",
+    "saveToHistory": "Save to My History",
+    "loginToSave": "Log in or sign up to save interpretations"
+  },
+  "timeResults": {
+    "mirrorHour": "Mirror Hour",
+    "reversedHour": "Reversed Hour",
+    "regularHour": "Regular Hour"
+  },
+  "interpretation": {
+    "spiritualTab": "Spiritual Meaning",
+    "angelTab": "Angel Message",
+    "numerologyTab": "Numerology",
+    "divineGuidance": "Divine Guidance:",
+    "rootNumber": "Root Number",
+    "mirrorAmplification": "Mirror Amplification"
+  },
+  "auth": {
+    "loginTitle": "Log In",
+    "signupTitle": "Create Account",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "fullName": "Full Name",
+    "forgotPassword": "Forgot password?",
+    "loginButton": "Log In",
+    "loggingIn": "Logging in...",
+    "signupButton": "Create Account",
+    "creatingAccount": "Creating Account...",
+    "noAccount": "Don't have an account?",
+    "signupLink": "Sign up",
+    "hasAccount": "Already have an account?",
+    "loginLink": "Log in",
+    "passwordHint": "Must be at least 8 characters long"
+  },
+  "history": {
+    "title": "Your History",
+    "closeButton": "Close",
+    "emptyState": "You haven't saved any interpretations yet",
+    "deleteConfirmTitle": "Delete interpretation",
+    "deleteConfirmMessage": "Are you sure you want to remove this interpretation from your history? This action cannot be undone.",
+    "cancelButton": "Cancel",
+    "deleteButton": "Delete"
+  },
+  "toast": {
+    "saveSuccess": "Saved to History",
+    "saveDescription": "The interpretation for {{time}} has been saved to your history.",
+    "loginSuccess": "Success",
+    "loginDescription": "You have been logged in successfully",
+    "accountCreated": "Account Created",
+    "accountCreatedDescription": "Your account has been created successfully"
+  },
+  "errors": {
+    "invalidTime": "Please enter a valid time in 24-hour format (e.g., 10:10)",
+    "invalidCredentials": "Invalid username or password",
+    "usernameTaken": "Username already taken",
+    "emailInUse": "Email already in use"
+  },
+  "language": {
+    "english": "English",
+    "french": "French"
+  }
+}
