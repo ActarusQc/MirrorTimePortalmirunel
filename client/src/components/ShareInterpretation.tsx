@@ -33,11 +33,17 @@ export default function ShareInterpretation({ time, interpretation }: ShareInter
     
     setIsGenerating(true);
     try {
+      // Make sure the element is properly rendered before capturing
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
       const canvas = await html2canvas(shareCardRef.current, {
         scale: 2, // Higher scale for better quality
         backgroundColor: '#ffffff',
-        logging: false,
+        logging: true, // Enable logging for debugging
         useCORS: true,
+        allowTaint: true,
+        foreignObjectRendering: false,
+        removeContainer: true
       });
       
       // Convert to a data URL
@@ -49,6 +55,14 @@ export default function ShareInterpretation({ time, interpretation }: ShareInter
     } catch (error) {
       console.error('Error generating image:', error);
       setIsGenerating(false);
+      
+      // Show error toast
+      toast({
+        title: t('share.errorTitle'),
+        description: t('share.errorGenerating'),
+        variant: 'destructive',
+      });
+      
       return null;
     }
   };
@@ -223,27 +237,36 @@ export default function ShareInterpretation({ time, interpretation }: ShareInter
       <div className="hidden">
         <div 
           ref={shareCardRef} 
-          className="w-[600px] h-[600px] p-8 bg-gradient-to-br from-primary/5 to-secondary/10"
-          style={{ fontFamily: "'Playfair Display', serif" }}
+          className="w-[600px] h-[600px]"
+          style={{ 
+            backgroundColor: "#ffffff",
+            padding: "32px"
+          }}
         >
-          <div className="h-full flex flex-col bg-white rounded-lg shadow-lg p-8 relative overflow-hidden">
-            {/* Background subtle pattern */}
-            <div className="absolute inset-0 opacity-5">
-              <div className="absolute inset-0 bg-repeat" style={{ 
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23${interpretation.type === 'mirror' ? '9C92AC' : interpretation.type === 'reversed' ? 'A98467' : '7EA1C4'}' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-              }} />
-            </div>
-            
+          <div 
+            style={{
+              height: "100%", 
+              display: "flex", 
+              flexDirection: "column",
+              backgroundColor: "#ffffff", 
+              border: "1px solid #e2e8f0",
+              borderRadius: "8px",
+              padding: "32px",
+              position: "relative",
+              overflow: "hidden",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
+            }}
+          >
             {/* Logo and branding */}
-            <div className="text-center mb-3">
-              <h1 className="text-xl font-bold text-primary">MirrorTime</h1>
-              <div className="w-16 h-1 bg-gradient-to-r from-primary to-secondary mx-auto mt-1"></div>
+            <div style={{textAlign: "center", marginBottom: "12px"}}>
+              <h1 style={{fontSize: "20px", fontWeight: "bold", color: "#6366f1"}}>MirrorTime</h1>
+              <div style={{width: "64px", height: "4px", backgroundColor: "#6366f1", margin: "4px auto 0"}}></div>
             </div>
             
             {/* Time display */}
-            <div className="text-center my-4">
-              <h2 className="text-5xl font-bold text-primary">{formatTimeDisplay(time)}</h2>
-              <div className="text-lg opacity-75 mt-1">
+            <div style={{textAlign: "center", margin: "16px 0"}}>
+              <h2 style={{fontSize: "48px", fontWeight: "bold", color: "#6366f1"}}>{formatTimeDisplay(time)}</h2>
+              <div style={{fontSize: "18px", opacity: "0.75", marginTop: "4px"}}>
                 {i18n.language === 'fr' ? 'Heure' : 'Hour'} 
                 {interpretation.type === 'mirror' ? 
                   (i18n.language === 'fr' ? ' Miroir' : ' Mirror') : 
@@ -254,13 +277,34 @@ export default function ShareInterpretation({ time, interpretation }: ShareInter
             </div>
             
             {/* Interpretation content */}
-            <div className="flex-1 flex flex-col justify-center">
-              <h3 className="text-xl font-bold text-center mb-4">{tabContent.title}</h3>
-              <p className="text-center text-md leading-relaxed">{tabContent.content}</p>
+            <div style={{
+              flex: "1", 
+              display: "flex", 
+              flexDirection: "column", 
+              justifyContent: "center"
+            }}>
+              <h3 style={{
+                fontSize: "20px", 
+                fontWeight: "bold", 
+                textAlign: "center", 
+                marginBottom: "16px",
+                color: "#4b5563"
+              }}>{tabContent.title}</h3>
+              <p style={{
+                textAlign: "center", 
+                fontSize: "16px", 
+                lineHeight: "1.5",
+                color: "#4b5563"
+              }}>{tabContent.content}</p>
             </div>
             
             {/* Footer */}
-            <div className="text-center text-sm opacity-50 mt-4">
+            <div style={{
+              textAlign: "center", 
+              fontSize: "14px", 
+              opacity: "0.5", 
+              marginTop: "16px"
+            }}>
               www.mirrortime.app
             </div>
           </div>
