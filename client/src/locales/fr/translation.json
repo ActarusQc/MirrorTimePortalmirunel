@@ -79,7 +79,9 @@
     "usernameTaken": "Ce nom d'utilisateur est déjà pris",
     "emailInUse": "Cet email est déjà utilisé",
     "saveFailed": "Échec de l'Enregistrement",
-    "saveFailedDescription": "Une erreur s'est produite lors de l'enregistrement de cet élément dans votre historique. Veuillez réessayer."
+    "saveFailedDescription": "Une erreur s'est produite lors de l'enregistrement de cet élément dans votre historique. Veuillez réessayer.",
+    "deleteFailed": "Échec de la Suppression",
+    "deleteFailedDescription": "Une erreur s'est produite lors de la suppression de cet élément. Veuillez réessayer."
   },
   "language": {
     "english": "Anglais",
@@ -123,6 +125,8 @@
     "placeholder": "Partagez vos pensées, sentiments ou ce qui se passait lorsque vous avez remarqué cette heure...",
     "saveButton": "Enregistrer Mes Pensées",
     "saving": "Enregistrement...",
+    "myThoughts": "Mes Pensées",
+    "experience": "Ce Que Je Vivais",
     "saved": {
       "title": "Pensées Enregistrées",
       "description": "Vos pensées ont été enregistrées avec succès.",
@@ -140,5 +144,14 @@
       "title": "Connexion Requise",
       "description": "Vous devez être connecté pour enregistrer vos pensées."
     }
+  },
+  "history": {
+    "title": "Votre Historique",
+    "loading": "Chargement de votre historique...",
+    "noItems": "Vous n'avez pas encore enregistré d'interprétations",
+    "deleteTitle": "Supprimer l'Interprétation",
+    "deleteConfirmation": "Êtes-vous sûr de vouloir supprimer cette interprétation de votre historique ? Cette action ne peut pas être annulée.",
+    "deleteSuccess": "Supprimé avec Succès",
+    "deleteSuccessDescription": "L'interprétation a été supprimée de votre historique."
   }
 }

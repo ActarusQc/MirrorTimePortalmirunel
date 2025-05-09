@@ -45,6 +45,7 @@ export default function ThoughtsRecorder({ time, timeType, onSaved }: ThoughtsRe
     setIsSaving(true);
     try {
       await apiRequest('POST', '/api/history', {
+        userId: user.id,
         time,
         type: timeType,
         thoughts,

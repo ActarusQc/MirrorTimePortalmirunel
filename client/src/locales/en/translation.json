@@ -79,7 +79,9 @@
     "usernameTaken": "Username already taken",
     "emailInUse": "Email already in use",
     "saveFailed": "Save Failed",
-    "saveFailedDescription": "There was an error saving this item to your history. Please try again."
+    "saveFailedDescription": "There was an error saving this item to your history. Please try again.",
+    "deleteFailed": "Delete Failed",
+    "deleteFailedDescription": "There was an error deleting this item. Please try again."
   },
   "language": {
     "english": "English",
@@ -123,6 +125,8 @@
     "placeholder": "Share your thoughts, feelings, or what was happening when you noticed this time...",
     "saveButton": "Save Thoughts",
     "saving": "Saving...",
+    "myThoughts": "My Thoughts",
+    "experience": "What I Was Experiencing",
     "saved": {
       "title": "Thoughts Saved",
       "description": "Your thoughts have been saved successfully.",
@@ -140,5 +144,14 @@
       "title": "Login Required",
       "description": "You need to be logged in to save your thoughts."
     }
+  },
+  "history": {
+    "title": "Your History",
+    "loading": "Loading your history...",
+    "noItems": "You haven't saved any interpretations yet",
+    "deleteTitle": "Delete Interpretation",
+    "deleteConfirmation": "Are you sure you want to remove this interpretation from your history? This action cannot be undone.",
+    "deleteSuccess": "Deleted Successfully",
+    "deleteSuccessDescription": "The interpretation has been removed from your history."
   }
 }
