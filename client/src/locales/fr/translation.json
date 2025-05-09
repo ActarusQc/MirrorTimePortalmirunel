@@ -107,6 +107,8 @@
     "errorTitle": "Erreur",
     "errorGenerating": "Une erreur s'est produite lors de la génération de l'image. Veuillez réessayer.",
     "errorCopying": "Une erreur s'est produite lors de la copie de l'image. Veuillez essayer de la télécharger.",
-    "errorSharing": "Une erreur s'est produite lors du partage de l'image. Veuillez essayer une autre option."
+    "errorSharing": "Une erreur s'est produite lors du partage de l'image. Veuillez essayer une autre option.",
+    "fallbackTitle": "Téléchargé à la Place",
+    "fallbackDescription": "Votre navigateur ne prend pas en charge la copie d'images. L'image a été téléchargée à la place."
   }
 }

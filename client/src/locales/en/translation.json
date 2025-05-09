@@ -107,6 +107,8 @@
     "errorTitle": "Error",
     "errorGenerating": "There was an error generating the image. Please try again.",
     "errorCopying": "There was an error copying the image. Please try downloading instead.",
-    "errorSharing": "There was an error sharing the image. Please try another option."
+    "errorSharing": "There was an error sharing the image. Please try another option.",
+    "fallbackTitle": "Downloaded Instead",
+    "fallbackDescription": "Your browser doesn't support copying images. The image has been downloaded instead."
   }
 }

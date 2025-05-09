@@ -337,22 +337,39 @@ export default function ShareInterpretation({ time, interpretation }: ShareInter
       // Create an image blob from the data URL
       const blob = await (await fetch(imageUrl)).blob();
       
-      // Copy to clipboard using the Clipboard API
-      await navigator.clipboard.write([
-        new ClipboardItem({
-          [blob.type]: blob
-        })
-      ]);
+      // Check if the Clipboard API supports writing images
+      // This feature has limited browser support and requires secure contexts (HTTPS)
+      if (navigator.clipboard && navigator.clipboard.write) {
+        try {
+          await navigator.clipboard.write([
+            new ClipboardItem({
+              [blob.type]: blob
+            })
+          ]);
+          
+          setIsLinkCopied(true);
+          setTimeout(() => setIsLinkCopied(false), 2000);
+          
+          toast({
+            title: t('share.copiedTitle'),
+            description: t('share.copiedDescription'),
+          });
+          return;
+        } catch (clipboardError) {
+          console.warn('Clipboard API write failed, using fallback:', clipboardError);
+          // Continue to fallback
+        }
+      }
       
-      setIsLinkCopied(true);
-      setTimeout(() => setIsLinkCopied(false), 2000);
+      // Fallback - download the image instead
+      handleDownload();
       
       toast({
-        title: t('share.copiedTitle'),
-        description: t('share.copiedDescription'),
+        title: t('share.fallbackTitle'),
+        description: t('share.fallbackDescription'),
       });
     } catch (error) {
-      console.error('Failed to copy image:', error);
+      console.error('Failed to process image:', error);
       
       toast({
         title: t('share.errorTitle'),
@@ -380,11 +397,22 @@ export default function ShareInterpretation({ time, interpretation }: ShareInter
         const blob = await (await fetch(imageUrl)).blob();
         const file = new File([blob], `mirror-hour-${time.replace(':', '-')}.png`, { type: 'image/png' });
         
-        await navigator.share({
-          title: t('share.shareTitle', { time }),
-          text: t('share.shareText'),
-          files: [file]
-        });
+        try {
+          // Try sharing with a file - this is the most feature-rich option but requires secure contexts
+          await navigator.share({
+            title: t('share.shareTitle', { time }),
+            text: t('share.shareText'),
+            files: [file]
+          });
+        } catch (fileShareError) {
+          console.warn('File sharing not supported, trying without files', fileShareError);
+          
+          // Fallback to just text sharing if file sharing isn't supported
+          await navigator.share({
+            title: t('share.shareTitle', { time }),
+            text: t('share.shareText')
+          });
+        }
         
         toast({
           title: t('share.sharedTitle'),
@@ -395,16 +423,23 @@ export default function ShareInterpretation({ time, interpretation }: ShareInter
         
         // If sharing failed but not because user canceled
         if (err instanceof Error && err.name !== 'AbortError') {
+          // Fallback to download if sharing failed
+          handleDownload();
+          
           toast({
-            title: t('share.errorTitle'),
-            description: t('share.errorSharing'),
-            variant: 'destructive',
+            title: t('share.fallbackTitle'),
+            description: t('share.fallbackDescription'),
           });
         }
       }
     } else {
-      // Fallback if Web Share API is not available
-      handleCopyToClipboard();
+      // Fallback if Web Share API is not available - just download
+      handleDownload();
+      
+      toast({
+        title: t('share.fallbackTitle'),
+        description: t('share.fallbackDescription'),
+      });
     }
   };
 
