@@ -13,53 +13,49 @@ export interface IStorage {
   deleteHistoryItem(id: number): Promise<void>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<number, User>;
-  private historyItems: Map<number, HistoryItem>;
-  private userId: number;
-  private historyId: number;
+import { db } from "./db";
+import { eq, desc } from "drizzle-orm";
 
-  constructor() {
-    this.users = new Map();
-    this.historyItems = new Map();
-    this.userId = 1;
-    this.historyId = 1;
-  }
-
+export class DatabaseStorage implements IStorage {
   async getUser(id: number): Promise<User | undefined> {
-    return this.users.get(id);
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const id = this.userId++;
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
+    const [user] = await db
+      .insert(users)
+      .values(insertUser)
+      .returning();
     return user;
   }
   
   async createHistoryItem(insertItem: InsertHistoryItem): Promise<HistoryItem> {
-    const id = this.historyId++;
-    const savedAt = new Date();
-    const historyItem: HistoryItem = { ...insertItem, id, savedAt };
-    this.historyItems.set(id, historyItem);
+    const [historyItem] = await db
+      .insert(historyItems)
+      .values(insertItem)
+      .returning();
     return historyItem;
   }
   
   async getHistoryByUserId(userId: number): Promise<HistoryItem[]> {
-    return Array.from(this.historyItems.values())
-      .filter(item => item.userId === userId)
-      .sort((a, b) => b.savedAt.getTime() - a.savedAt.getTime());
+    return await db
+      .select()
+      .from(historyItems)
+      .where(eq(historyItems.userId, userId))
+      .orderBy(desc(historyItems.savedAt));
   }
   
   async deleteHistoryItem(id: number): Promise<void> {
-    this.historyItems.delete(id);
+    await db
+      .delete(historyItems)
+      .where(eq(historyItems.id, id));
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
