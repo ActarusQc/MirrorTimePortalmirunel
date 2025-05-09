@@ -1,10 +1,7 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import html2canvas from 'html2canvas';
-import { motion } from 'framer-motion';
 import { Share2, Download, Copy, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,33 +20,145 @@ interface ShareInterpretationProps {
 export default function ShareInterpretation({ time, interpretation }: ShareInterpretationProps) {
   const { t, i18n } = useTranslation();
   const { toast } = useToast();
-  const shareCardRef = useRef<HTMLDivElement>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isLinkCopied, setIsLinkCopied] = useState(false);
   
-  // Create a function to generate and download the image
-  const generateImage = async () => {
-    if (!shareCardRef.current) return;
+  // Function to draw text with wrapping
+  const wrapText = (
+    ctx: CanvasRenderingContext2D, 
+    text: string, 
+    x: number, 
+    y: number, 
+    maxWidth: number, 
+    lineHeight: number
+  ) => {
+    const words = text.split(' ');
+    let line = '';
+    let testLine = '';
+    let lineCount = 1;
+
+    for (let i = 0; i < words.length; i++) {
+      testLine = line + words[i] + ' ';
+      const metrics = ctx.measureText(testLine);
+      const testWidth = metrics.width;
+      
+      if (testWidth > maxWidth && i > 0) {
+        ctx.fillText(line, x, y);
+        line = words[i] + ' ';
+        y += lineHeight;
+        lineCount++;
+      } else {
+        line = testLine;
+      }
+    }
     
+    ctx.fillText(line, x, y);
+    return lineCount;
+  };
+  
+  // Create a function to generate the image
+  const generateImage = async () => {
     setIsGenerating(true);
     try {
-      // Make sure the element is properly rendered before capturing
-      await new Promise(resolve => setTimeout(resolve, 100));
+      // Create canvas
+      const canvas = document.createElement('canvas');
+      canvas.width = 600;
+      canvas.height = 600;
       
-      const canvas = await html2canvas(shareCardRef.current, {
-        scale: 2, // Higher scale for better quality
-        backgroundColor: '#ffffff',
-        logging: true, // Enable logging for debugging
-        useCORS: true,
-        allowTaint: true,
-        foreignObjectRendering: false,
-        removeContainer: true
-      });
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        throw new Error('Could not get canvas context');
+      }
       
-      // Convert to a data URL
+      // Set up colors
+      const primaryColor = '#6366f1';
+      const textColor = '#4b5563';
+      
+      // Fill background
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw card background
+      ctx.fillStyle = '#ffffff';
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.roundRect(32, 32, canvas.width - 64, canvas.height - 64, 8);
+      ctx.fill();
+      ctx.stroke();
+      
+      // Header with logo
+      ctx.font = 'bold 20px Arial';
+      ctx.fillStyle = primaryColor;
+      ctx.textAlign = 'center';
+      ctx.fillText('MirrorTime', canvas.width / 2, 80);
+      
+      // Underline
+      ctx.fillStyle = primaryColor;
+      ctx.fillRect(canvas.width / 2 - 32, 90, 64, 4);
+      
+      // Time display
+      ctx.font = 'bold 48px Arial';
+      ctx.fillStyle = primaryColor;
+      ctx.fillText(formatTimeDisplay(time), canvas.width / 2, 160);
+      
+      // Time type
+      ctx.font = '18px Arial';
+      ctx.fillStyle = textColor;
+      ctx.fillText(
+        `${i18n.language === 'fr' ? 'Heure' : 'Hour'}${interpretation.type === 'mirror' ? 
+          (i18n.language === 'fr' ? ' Miroir' : ' Mirror') : 
+          interpretation.type === 'reversed' ? 
+            (i18n.language === 'fr' ? ' Inversée' : ' Reversed') : 
+            ''}`, 
+        canvas.width / 2, 
+        190
+      );
+      
+      // Get tab content
+      const tabContent = (() => {
+        if (interpretation.type === 'mirror') {
+          return {
+            title: interpretation.spiritual.title,
+            content: interpretation.spiritual.description,
+          };
+        } else if (interpretation.type === 'reversed') {
+          return {
+            title: interpretation.angel.name,
+            content: interpretation.angel.message,
+          };
+        } else {
+          return {
+            title: interpretation.numerology.title,
+            content: interpretation.numerology.analysis,
+          };
+        }
+      })();
+      
+      // Title
+      ctx.font = 'bold 20px Arial';
+      ctx.fillStyle = textColor;
+      ctx.fillText(tabContent.title, canvas.width / 2, 250);
+      
+      // Description - with text wrapping
+      ctx.font = '16px Arial';
+      ctx.fillStyle = textColor;
+      ctx.textAlign = 'center';
+      
+      // Wrap text
+      const maxWidth = canvas.width - 128;
+      const lineHeight = 24;
+      let y = 280;
+      
+      const lines = wrapText(ctx, tabContent.content, canvas.width / 2, y, maxWidth, lineHeight);
+      
+      // Footer
+      ctx.font = '14px Arial';
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText('www.mirrortime.app', canvas.width / 2, 550);
+      
+      // Convert to data URL
       const dataUrl = canvas.toDataURL('image/png');
-      
-      // Return the data URL
       setIsGenerating(false);
       return dataUrl;
     } catch (error) {
@@ -200,116 +309,34 @@ export default function ShareInterpretation({ time, interpretation }: ShareInter
     }
   };
 
-  const tabContent = getTabContent();
-
   return (
-    <>
-      <div className="mt-6 flex justify-center">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button className="bg-primary text-white hover:bg-secondary transition-colors">
-              <Share2 className="h-4 w-4 mr-2" />
-              {t('share.shareButton')}
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="center">
-            <DropdownMenuItem onClick={handleDownload} disabled={isGenerating}>
-              <Download className="h-4 w-4 mr-2" />
-              {t('share.download')}
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleCopyToClipboard} disabled={isGenerating}>
-              {isLinkCopied ? (
-                <Check className="h-4 w-4 mr-2" />
-              ) : (
-                <Copy className="h-4 w-4 mr-2" />
-              )}
-              {isLinkCopied ? t('share.copied') : t('share.copyImage')}
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleShare} disabled={isGenerating}>
-              <Share2 className="h-4 w-4 mr-2" />
-              {t('share.share')}
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-
-      {/* Hidden shareable image card that will be captured */}
-      <div className="hidden">
-        <div 
-          ref={shareCardRef} 
-          className="w-[600px] h-[600px]"
-          style={{ 
-            backgroundColor: "#ffffff",
-            padding: "32px"
-          }}
-        >
-          <div 
-            style={{
-              height: "100%", 
-              display: "flex", 
-              flexDirection: "column",
-              backgroundColor: "#ffffff", 
-              border: "1px solid #e2e8f0",
-              borderRadius: "8px",
-              padding: "32px",
-              position: "relative",
-              overflow: "hidden",
-              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
-            }}
-          >
-            {/* Logo and branding */}
-            <div style={{textAlign: "center", marginBottom: "12px"}}>
-              <h1 style={{fontSize: "20px", fontWeight: "bold", color: "#6366f1"}}>MirrorTime</h1>
-              <div style={{width: "64px", height: "4px", backgroundColor: "#6366f1", margin: "4px auto 0"}}></div>
-            </div>
-            
-            {/* Time display */}
-            <div style={{textAlign: "center", margin: "16px 0"}}>
-              <h2 style={{fontSize: "48px", fontWeight: "bold", color: "#6366f1"}}>{formatTimeDisplay(time)}</h2>
-              <div style={{fontSize: "18px", opacity: "0.75", marginTop: "4px"}}>
-                {i18n.language === 'fr' ? 'Heure' : 'Hour'} 
-                {interpretation.type === 'mirror' ? 
-                  (i18n.language === 'fr' ? ' Miroir' : ' Mirror') : 
-                  interpretation.type === 'reversed' ? 
-                    (i18n.language === 'fr' ? ' Inversée' : ' Reversed') : 
-                    ''}
-              </div>
-            </div>
-            
-            {/* Interpretation content */}
-            <div style={{
-              flex: "1", 
-              display: "flex", 
-              flexDirection: "column", 
-              justifyContent: "center"
-            }}>
-              <h3 style={{
-                fontSize: "20px", 
-                fontWeight: "bold", 
-                textAlign: "center", 
-                marginBottom: "16px",
-                color: "#4b5563"
-              }}>{tabContent.title}</h3>
-              <p style={{
-                textAlign: "center", 
-                fontSize: "16px", 
-                lineHeight: "1.5",
-                color: "#4b5563"
-              }}>{tabContent.content}</p>
-            </div>
-            
-            {/* Footer */}
-            <div style={{
-              textAlign: "center", 
-              fontSize: "14px", 
-              opacity: "0.5", 
-              marginTop: "16px"
-            }}>
-              www.mirrortime.app
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+    <div className="mt-6 flex justify-center">
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button className="bg-primary text-white hover:bg-secondary transition-colors">
+            <Share2 className="h-4 w-4 mr-2" />
+            {t('share.shareButton')}
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="center">
+          <DropdownMenuItem onClick={handleDownload} disabled={isGenerating}>
+            <Download className="h-4 w-4 mr-2" />
+            {t('share.download')}
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={handleCopyToClipboard} disabled={isGenerating}>
+            {isLinkCopied ? (
+              <Check className="h-4 w-4 mr-2" />
+            ) : (
+              <Copy className="h-4 w-4 mr-2" />
+            )}
+            {isLinkCopied ? t('share.copied') : t('share.copyImage')}
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={handleShare} disabled={isGenerating}>
+            <Share2 className="h-4 w-4 mr-2" />
+            {t('share.share')}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
   );
 }
