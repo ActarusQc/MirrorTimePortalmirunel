@@ -89,5 +89,24 @@
   },
   "common": {
     "or": "ou"
+  },
+  "share": {
+    "shareButton": "Partager l'Interprétation",
+    "download": "Télécharger l'Image",
+    "copyImage": "Copier dans le Presse-papiers",
+    "share": "Partager",
+    "copied": "Copié !",
+    "shareTitle": "Interprétation de l'Heure Miroir pour {{time}}",
+    "shareText": "Découvrez cette interprétation d'heure miroir de MirrorTime !",
+    "downloadedTitle": "Image Téléchargée",
+    "downloadedDescription": "L'image d'interprétation a été enregistrée sur votre appareil.",
+    "copiedTitle": "Copié dans le Presse-papiers",
+    "copiedDescription": "L'image d'interprétation a été copiée dans votre presse-papiers.",
+    "sharedTitle": "Image Partagée",
+    "sharedDescription": "L'image d'interprétation a été partagée avec succès.",
+    "errorTitle": "Erreur",
+    "errorGenerating": "Une erreur s'est produite lors de la génération de l'image. Veuillez réessayer.",
+    "errorCopying": "Une erreur s'est produite lors de la copie de l'image. Veuillez essayer de la télécharger.",
+    "errorSharing": "Une erreur s'est produite lors du partage de l'image. Veuillez essayer une autre option."
   }
 }

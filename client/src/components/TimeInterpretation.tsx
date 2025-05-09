@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Interpretation } from '@/lib/timeUtils';
+import ShareInterpretation from '@/components/ShareInterpretation';
 
 interface TimeInterpretationProps {
   time: string;
@@ -198,23 +199,28 @@ export default function TimeInterpretation({
           </TabsContent>
 
           <CardFooter className="px-6 pb-6 pt-0 flex flex-col">
-            {isLoggedIn ? (
-              <Button onClick={handleSaveInterpretation} className="w-full bg-primary text-white py-6 hover:bg-secondary transition-colors">
-                <Bookmark className="h-4 w-4 mr-2" />
-                {t('interpretation.saveButton')}
-              </Button>
-            ) : (
-              <>
-                <Button disabled className="w-full bg-primary text-white py-6 transition-colors opacity-70 mb-2">
+            <div className="flex flex-col space-y-4 w-full">
+              {isLoggedIn ? (
+                <Button onClick={handleSaveInterpretation} className="w-full bg-primary text-white py-6 hover:bg-secondary transition-colors">
                   <Bookmark className="h-4 w-4 mr-2" />
                   {t('interpretation.saveButton')}
                 </Button>
-                <p className="text-center text-sm text-mediumgray">
-                  <button onClick={onShowLogin} className="text-primary hover:underline">{t('auth.login')}</button> {t('common.or')}{' '}
-                  <button onClick={onShowSignup} className="text-primary hover:underline">{t('auth.signup')}</button> {t('interpretation.toSave')}
-                </p>
-              </>
-            )}
+              ) : (
+                <>
+                  <Button disabled className="w-full bg-primary text-white py-6 transition-colors opacity-70 mb-2">
+                    <Bookmark className="h-4 w-4 mr-2" />
+                    {t('interpretation.saveButton')}
+                  </Button>
+                  <p className="text-center text-sm text-mediumgray">
+                    <button onClick={onShowLogin} className="text-primary hover:underline">{t('auth.login')}</button> {t('common.or')}{' '}
+                    <button onClick={onShowSignup} className="text-primary hover:underline">{t('auth.signup')}</button> {t('interpretation.toSave')}
+                  </p>
+                </>
+              )}
+              
+              {/* Share interpretation component */}
+              <ShareInterpretation time={time} interpretation={interpretation} />
+            </div>
           </CardFooter>
         </Tabs>
       </Card>
