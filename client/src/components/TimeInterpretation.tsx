@@ -238,9 +238,27 @@ export default function TimeInterpretation({
           <CardFooter className="px-6 pb-6 pt-0 flex flex-col">
             <div className="flex flex-col space-y-4 w-full">
               {isLoggedIn ? (
-                <Button onClick={handleSaveInterpretation} className="w-full bg-primary text-white py-6 hover:bg-secondary transition-colors">
-                  <Bookmark className="h-4 w-4 mr-2" />
-                  {t('interpretation.saveButton')}
+                <Button 
+                  onClick={handleSaveInterpretation} 
+                  className="w-full bg-primary text-white py-6 hover:bg-secondary transition-colors"
+                  disabled={isSaving || isSaved}
+                >
+                  {isSaving ? (
+                    <span className="flex items-center">
+                      <span className="animate-spin mr-2">⧖</span>
+                      {t('thoughts.saving')}
+                    </span>
+                  ) : isSaved ? (
+                    <span className="flex items-center">
+                      <SaveIcon className="h-4 w-4 mr-2" />
+                      {t('thoughts.saved.button')}
+                    </span>
+                  ) : (
+                    <span className="flex items-center">
+                      <Bookmark className="h-4 w-4 mr-2" />
+                      {t('interpretation.saveButton')}
+                    </span>
+                  )}
                 </Button>
               ) : (
                 <>
