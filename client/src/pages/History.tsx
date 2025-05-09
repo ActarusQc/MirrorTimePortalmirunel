@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/hooks/useAuth';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
@@ -15,7 +16,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { X, Clock, Trash2 } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { apiRequest } from '@/lib/queryClient';
+import { X, Clock, Trash2, RefreshCw } from 'lucide-react';
 
 interface HistoryItem {
   id: number;
@@ -35,6 +38,51 @@ export default function History() {
   const { user, isLoggedIn } = useAuth();
   const [historyItems, setHistoryItems] = useState<HistoryItem[]>([]);
   const [itemToDelete, setItemToDelete] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
+  const { t } = useTranslation();
+  
+  // Fetch history from API
+  const fetchHistory = async () => {
+    if (!user) return;
+    
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      // Fetch from API
+      const response = await fetch(`/api/history/${user.id}`, {
+        credentials: 'include'
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to fetch history: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      setHistoryItems(data);
+      
+      // Also save to localStorage for backup
+      localStorage.setItem(`mirrorTime_history_${user.id}`, JSON.stringify(data));
+    } catch (err) {
+      console.error('Error fetching history:', err);
+      setError('Failed to load history. Using local data if available.');
+      
+      // Fallback to localStorage
+      const savedHistory = localStorage.getItem(`mirrorTime_history_${user.id}`);
+      if (savedHistory) {
+        try {
+          const parsed = JSON.parse(savedHistory);
+          setHistoryItems(parsed);
+        } catch (e) {
+          console.error('Failed to parse local history', e);
+        }
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
   
   useEffect(() => {
     if (!isLoggedIn) {
@@ -42,37 +90,42 @@ export default function History() {
       return;
     }
     
-    // Load history from localStorage
-    const loadHistory = () => {
-      if (!user) return;
-      
-      const savedHistory = localStorage.getItem(`mirrorTime_history_${user.id}`);
-      if (savedHistory) {
-        try {
-          const parsed = JSON.parse(savedHistory);
-          setHistoryItems(parsed);
-        } catch (e) {
-          console.error('Failed to parse history', e);
-        }
-      }
-    };
-    
-    loadHistory();
+    fetchHistory();
   }, [isLoggedIn, user, setLocation]);
   
   const handleDeleteItem = (id: number) => {
     setItemToDelete(id);
   };
   
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (itemToDelete === null || !user) return;
     
-    const newHistory = historyItems.filter(item => item.id !== itemToDelete);
-    setHistoryItems(newHistory);
-    
-    // Save to localStorage
-    localStorage.setItem(`mirrorTime_history_${user.id}`, JSON.stringify(newHistory));
-    setItemToDelete(null);
+    try {
+      // Delete from API
+      await apiRequest('DELETE', `/api/history/${itemToDelete}`);
+      
+      // Update local state
+      const newHistory = historyItems.filter(item => item.id !== itemToDelete);
+      setHistoryItems(newHistory);
+      
+      // Also update localStorage
+      localStorage.setItem(`mirrorTime_history_${user.id}`, JSON.stringify(newHistory));
+      
+      toast({
+        title: t('history.deleteSuccess'),
+        description: t('history.deleteSuccessDescription'),
+      });
+    } catch (err) {
+      console.error('Error deleting history item:', err);
+      
+      toast({
+        title: t('errors.deleteFailed'),
+        description: t('errors.deleteFailedDescription'),
+        variant: 'destructive',
+      });
+    } finally {
+      setItemToDelete(null);
+    }
   };
   
   const formatDate = (date: Date) => {
@@ -87,18 +140,43 @@ export default function History() {
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-playfair font-bold text-primary">Your History</h1>
+          <div className="flex items-center">
+            <h1 className="text-2xl font-playfair font-bold text-primary mr-3">{t('history.title')}</h1>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="text-mediumgray" 
+              onClick={fetchHistory}
+              disabled={isLoading}
+            >
+              <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
+              <span className="sr-only">{t('common.refresh')}</span>
+            </Button>
+          </div>
           <Button variant="outline" onClick={() => setLocation('/')}>
             <X className="h-4 w-4 mr-2" />
-            Close
+            {t('common.close')}
           </Button>
         </div>
         
-        {historyItems.length === 0 ? (
+        {error && (
+          <div className="bg-amber-50 border border-amber-200 text-amber-800 px-4 py-3 rounded mb-6">
+            <p>{error}</p>
+          </div>
+        )}
+        
+        {isLoading ? (
+          <Card className="text-center py-10">
+            <CardContent className="flex flex-col items-center">
+              <RefreshCw className="h-12 w-12 text-primary mb-3 animate-spin" />
+              <p className="text-mediumgray">{t('history.loading')}</p>
+            </CardContent>
+          </Card>
+        ) : historyItems.length === 0 ? (
           <Card className="text-center py-10">
             <CardContent className="flex flex-col items-center">
               <Clock className="h-12 w-12 text-gray-300 mb-3" />
-              <p className="text-mediumgray">You haven't saved any interpretations yet</p>
+              <p className="text-mediumgray">{t('history.noItems')}</p>
             </CardContent>
           </Card>
         ) : (
@@ -126,11 +204,11 @@ export default function History() {
                   
                   <Tabs defaultValue="spiritual">
                     <TabsList className={`grid w-full ${item.thoughts ? 'grid-cols-4' : 'grid-cols-3'}`}>
-                      <TabsTrigger value="spiritual">Spiritual</TabsTrigger>
-                      <TabsTrigger value="angel">Angel</TabsTrigger>
-                      <TabsTrigger value="numerology">Numerology</TabsTrigger>
+                      <TabsTrigger value="spiritual">{t('interpretation.spiritualTab')}</TabsTrigger>
+                      <TabsTrigger value="angel">{t('interpretation.angelTab')}</TabsTrigger>
+                      <TabsTrigger value="numerology">{t('interpretation.numerologyTab')}</TabsTrigger>
                       {item.thoughts && (
-                        <TabsTrigger value="thoughts">My Thoughts</TabsTrigger>
+                        <TabsTrigger value="thoughts">{t('thoughts.myThoughts')}</TabsTrigger>
                       )}
                     </TabsList>
                     
@@ -158,7 +236,7 @@ export default function History() {
                     {item.thoughts && (
                       <TabsContent value="thoughts" className="mt-4">
                         <div className="bg-gray-50 p-3 rounded-lg">
-                          <h4 className="font-medium text-primary mb-1">What I Was Experiencing</h4>
+                          <h4 className="font-medium text-primary mb-1">{t('thoughts.experience')}</h4>
                           <p className="text-mediumgray text-sm">{item.thoughts}</p>
                         </div>
                       </TabsContent>
@@ -174,15 +252,14 @@ export default function History() {
       <AlertDialog open={itemToDelete !== null} onOpenChange={(open) => !open && setItemToDelete(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete interpretation</AlertDialogTitle>
+            <AlertDialogTitle>{t('history.deleteTitle')}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to remove this interpretation from your history?
-              This action cannot be undone.
+              {t('history.deleteConfirmation')}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmDelete}>Delete</AlertDialogAction>
+            <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDelete}>{t('common.delete')}</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

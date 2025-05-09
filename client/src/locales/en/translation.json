@@ -90,7 +90,11 @@
     "searchAriaLabel": "Search time interpretation"
   },
   "common": {
-    "or": "or"
+    "or": "or",
+    "close": "Close",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "refresh": "Refresh"
   },
   "share": {
     "shareButton": "Share Interpretation",

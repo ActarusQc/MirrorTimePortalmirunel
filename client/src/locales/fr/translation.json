@@ -77,7 +77,9 @@
     "invalidTime": "Veuillez entrer une heure valide au format 24 heures (par exemple, 10:10)",
     "invalidCredentials": "Nom d'utilisateur ou mot de passe invalide",
     "usernameTaken": "Ce nom d'utilisateur est déjà pris",
-    "emailInUse": "Cet email est déjà utilisé"
+    "emailInUse": "Cet email est déjà utilisé",
+    "saveFailed": "Échec de l'Enregistrement",
+    "saveFailedDescription": "Une erreur s'est produite lors de l'enregistrement de cet élément dans votre historique. Veuillez réessayer."
   },
   "language": {
     "english": "Anglais",
@@ -88,7 +90,11 @@
     "searchAriaLabel": "Rechercher l'interprétation de l'heure"
   },
   "common": {
-    "or": "ou"
+    "or": "ou",
+    "close": "Fermer",
+    "delete": "Supprimer",
+    "cancel": "Annuler",
+    "refresh": "Actualiser"
   },
   "share": {
     "shareButton": "Partager l'Interprétation",
