@@ -110,5 +110,29 @@
     "errorSharing": "Une erreur s'est produite lors du partage de l'image. Veuillez essayer une autre option.",
     "fallbackTitle": "Téléchargé à la Place",
     "fallbackDescription": "Votre navigateur ne prend pas en charge la copie d'images. L'image a été téléchargée à la place."
+  },
+  "thoughts": {
+    "tabTitle": "Enregistrer Vos Pensées",
+    "prompt": "À quoi pensiez-vous ou que viviez-vous quand vous avez vu cette heure ?",
+    "placeholder": "Partagez vos pensées, sentiments ou ce qui se passait lorsque vous avez remarqué cette heure...",
+    "saveButton": "Enregistrer Mes Pensées",
+    "saving": "Enregistrement...",
+    "saved": {
+      "title": "Pensées Enregistrées",
+      "description": "Vos pensées ont été enregistrées avec succès.",
+      "button": "Enregistré"
+    },
+    "empty": {
+      "title": "Pensées Vides",
+      "description": "Veuillez saisir vos pensées avant d'enregistrer."
+    },
+    "error": {
+      "title": "Erreur d'Enregistrement",
+      "description": "Une erreur s'est produite lors de l'enregistrement de vos pensées. Veuillez réessayer."
+    },
+    "loginRequired": {
+      "title": "Connexion Requise",
+      "description": "Vous devez être connecté pour enregistrer vos pensées."
+    }
   }
 }

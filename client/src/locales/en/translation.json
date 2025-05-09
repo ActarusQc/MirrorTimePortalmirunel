@@ -110,5 +110,29 @@
     "errorSharing": "There was an error sharing the image. Please try another option.",
     "fallbackTitle": "Downloaded Instead",
     "fallbackDescription": "Your browser doesn't support copying images. The image has been downloaded instead."
+  },
+  "thoughts": {
+    "tabTitle": "Record Your Thoughts",
+    "prompt": "What were you thinking or experiencing when you saw this time?",
+    "placeholder": "Share your thoughts, feelings, or what was happening when you noticed this time...",
+    "saveButton": "Save Thoughts",
+    "saving": "Saving...",
+    "saved": {
+      "title": "Thoughts Saved",
+      "description": "Your thoughts have been saved successfully.",
+      "button": "Saved"
+    },
+    "empty": {
+      "title": "Empty Thoughts",
+      "description": "Please enter your thoughts before saving."
+    },
+    "error": {
+      "title": "Error Saving",
+      "description": "There was an error saving your thoughts. Please try again."
+    },
+    "loginRequired": {
+      "title": "Login Required",
+      "description": "You need to be logged in to save your thoughts."
+    }
   }
 }
