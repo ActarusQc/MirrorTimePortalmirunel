@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/hooks/useAuth';
 import { Bookmark } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -23,6 +24,7 @@ export default function TimeInterpretation({
 }: TimeInterpretationProps) {
   const { isLoggedIn, user } = useAuth();
   const { toast } = useToast();
+  const { t } = useTranslation();
   
   const handleSaveInterpretation = () => {
     if (!isLoggedIn || !user) {
@@ -50,8 +52,8 @@ export default function TimeInterpretation({
     localStorage.setItem(historyKey, JSON.stringify(history));
     
     toast({
-      title: "Saved to History",
-      description: `The interpretation for ${time} has been saved to your history.`,
+      title: t('toast.savedTitle'),
+      description: t('toast.savedDescription', { time }),
       duration: 3000,
     });
   };
@@ -71,14 +73,14 @@ export default function TimeInterpretation({
               className="flex-1 py-3 px-4 font-medium data-[state=active]:tab-active data-[state=active]:shadow-none rounded-none"
             >
               <svg className="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
-              Spiritual Meaning
+              {t('interpretation.spiritualTab')}
             </TabsTrigger>
             <TabsTrigger 
               value="angel" 
               className="flex-1 py-3 px-4 font-medium data-[state=active]:tab-active data-[state=active]:shadow-none rounded-none"
             >
               <svg className="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg>
-              Angel Message
+              {t('interpretation.angelTab')}
             </TabsTrigger>
             <TabsTrigger 
               value="numerology" 

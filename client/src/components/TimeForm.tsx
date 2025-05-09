@@ -41,7 +41,7 @@ export default function TimeForm({ onSubmit }: TimeFormProps) {
           name="time"
           render={({ field }) => (
             <FormItem className="mb-6">
-              <FormLabel className="block text-mediumgray mb-2 font-medium">Enter Time (24-hour format)</FormLabel>
+              <FormLabel className="block text-mediumgray mb-2 font-medium">{t('timeForm.label')}</FormLabel>
               <div className="relative">
                 <FormControl>
                   <Input
@@ -54,6 +54,7 @@ export default function TimeForm({ onSubmit }: TimeFormProps) {
                 <button
                   type="submit"
                   className="absolute right-3 top-3 text-primary hover:text-secondary transition-colors"
+                  aria-label={t('timeForm.searchAriaLabel')}
                 >
                   <Search className="h-5 w-5" />
                 </button>
