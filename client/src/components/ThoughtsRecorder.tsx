@@ -25,7 +25,7 @@ export default function ThoughtsRecorder({ time, timeType, onSaved }: ThoughtsRe
   const [isSaved, setIsSaved] = useState(false);
   
   // Get the interpretation data for this time
-  const { data: interpretation } = useTimeInterpretation(time);
+  const { interpretation } = useTimeInterpretation(time);
 
   const handleSaveThoughts = async () => {
     if (!isLoggedIn || !user) {
