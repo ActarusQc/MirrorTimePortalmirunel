@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 20 14.3% 4.1%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+    --primary: 263 58% 67%;     /* #7B68EE */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 262 62% 65%;   /* #9370DB */
+    --secondary-foreground: 0 0% 100%;
+    --accent: 51 100% 50%;      /* #FFD700 */
+    --accent-foreground: 24 9.8% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --ring: 263 58% 67%;
+    --radius: 0.5rem;
+    
+    /* Custom colors */
+    --dark: 0 0% 20%;           /* #333333 */
+    --light: 0 0% 98%;          /* #FAFAFA */
+    --mediumgray: 0 0% 29%;     /* #4A4A4A */
+    --success: 122 39% 49%;     /* #4CAF50 */
+    --error: 0 74% 58%;         /* #F44336 */
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --primary: 263 58% 67%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 262 62% 65%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 51 100% 50%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --ring: 240 4.9% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    @apply bg-light text-dark;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
+}
+
+.tab-active {
+  border-bottom: 2px solid hsl(var(--accent));
+  color: hsl(var(--primary));
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.time-input::-webkit-calendar-picker-indicator {
+  display: none;
+}
