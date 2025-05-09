@@ -8,7 +8,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Interpretation } from '@/lib/timeUtils';
+import { apiRequest } from '@/lib/queryClient';
 import ShareInterpretation from '@/components/ShareInterpretation';
+import ThoughtsRecorder from '@/components/ThoughtsRecorder';
 
 interface TimeInterpretationProps {
   time: string;
@@ -27,36 +29,54 @@ export default function TimeInterpretation({
   const { toast } = useToast();
   const { t } = useTranslation();
   
-  const handleSaveInterpretation = () => {
+  const handleSaveInterpretation = async () => {
     if (!isLoggedIn || !user) {
       return;
     }
     
-    // Save to localStorage
-    const historyKey = `mirrorTime_history_${user.id}`;
-    const existingHistory = localStorage.getItem(historyKey);
-    let history = existingHistory ? JSON.parse(existingHistory) : [];
-    
-    const newHistoryItem = {
-      id: Date.now(),
-      time,
-      type: interpretation.type,
-      savedAt: new Date(),
-      details: {
-        spiritual: interpretation.spiritual,
-        angel: interpretation.angel,
-        numerology: interpretation.numerology
-      }
-    };
-    
-    history = [newHistoryItem, ...history];
-    localStorage.setItem(historyKey, JSON.stringify(history));
-    
-    toast({
-      title: t('toast.savedTitle'),
-      description: t('toast.savedDescription', { time }),
-      duration: 3000,
-    });
+    try {
+      // Save to API
+      await apiRequest('POST', '/api/history', {
+        userId: user.id,
+        time,
+        type: interpretation.type,
+      });
+      
+      // Also save to localStorage for quick access
+      const historyKey = `mirrorTime_history_${user.id}`;
+      const existingHistory = localStorage.getItem(historyKey);
+      let history = existingHistory ? JSON.parse(existingHistory) : [];
+      
+      const newHistoryItem = {
+        id: Date.now(),
+        time,
+        type: interpretation.type,
+        savedAt: new Date(),
+        details: {
+          spiritual: interpretation.spiritual,
+          angel: interpretation.angel,
+          numerology: interpretation.numerology
+        }
+      };
+      
+      history = [newHistoryItem, ...history];
+      localStorage.setItem(historyKey, JSON.stringify(history));
+      
+      toast({
+        title: t('toast.savedTitle'),
+        description: t('toast.savedDescription', { time }),
+        duration: 3000,
+      });
+    } catch (error) {
+      console.error('Error saving to history:', error);
+      
+      toast({
+        title: t('errors.saveFailed'),
+        description: t('errors.saveFailedDescription'),
+        variant: 'destructive',
+        duration: 3000,
+      });
+    }
   };
 
   return (
@@ -216,6 +236,15 @@ export default function TimeInterpretation({
                     <button onClick={onShowSignup} className="text-primary hover:underline">{t('auth.signup')}</button> {t('interpretation.toSave')}
                   </p>
                 </>
+              )}
+              
+              {/* ThoughtsRecorder component */}
+              {isLoggedIn && (
+                <ThoughtsRecorder 
+                  time={time} 
+                  timeType={interpretation.type} 
+                  onSaved={handleSaveInterpretation}
+                />
               )}
               
               {/* Share interpretation component */}

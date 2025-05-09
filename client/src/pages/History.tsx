@@ -22,6 +22,7 @@ interface HistoryItem {
   time: string;
   type: string;
   savedAt: Date;
+  thoughts?: string;
   details: {
     spiritual: { title: string; description: string; };
     angel: { name: string; message: string; };
@@ -124,10 +125,13 @@ export default function History() {
                   </div>
                   
                   <Tabs defaultValue="spiritual">
-                    <TabsList className="grid w-full grid-cols-3">
+                    <TabsList className={`grid w-full ${item.thoughts ? 'grid-cols-4' : 'grid-cols-3'}`}>
                       <TabsTrigger value="spiritual">Spiritual</TabsTrigger>
                       <TabsTrigger value="angel">Angel</TabsTrigger>
                       <TabsTrigger value="numerology">Numerology</TabsTrigger>
+                      {item.thoughts && (
+                        <TabsTrigger value="thoughts">My Thoughts</TabsTrigger>
+                      )}
                     </TabsList>
                     
                     <TabsContent value="spiritual" className="mt-4">
@@ -150,6 +154,15 @@ export default function History() {
                         <p className="text-mediumgray text-sm">{item.details.numerology.analysis}</p>
                       </div>
                     </TabsContent>
+                    
+                    {item.thoughts && (
+                      <TabsContent value="thoughts" className="mt-4">
+                        <div className="bg-gray-50 p-3 rounded-lg">
+                          <h4 className="font-medium text-primary mb-1">What I Was Experiencing</h4>
+                          <p className="text-mediumgray text-sm">{item.thoughts}</p>
+                        </div>
+                      </TabsContent>
+                    )}
                   </Tabs>
                 </CardContent>
               </Card>

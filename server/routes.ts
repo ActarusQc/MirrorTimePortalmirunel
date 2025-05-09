@@ -49,7 +49,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // History routes
   app.post("/api/history", async (req, res) => {
     try {
-      const historyData = insertHistoryItemSchema.parse(req.body);
+      // Include thoughts if provided
+      const { thoughts, ...requiredData } = req.body;
+      const historyData = insertHistoryItemSchema.parse({
+        ...requiredData,
+        // Only include thoughts if it has content
+        ...(thoughts && thoughts.trim() ? { thoughts } : {})
+      });
+      
       const historyItem = await storage.createHistoryItem(historyData);
       return res.status(201).json(historyItem);
     } catch (error) {
