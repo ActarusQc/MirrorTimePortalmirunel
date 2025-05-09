@@ -57,12 +57,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ...(thoughts && thoughts.trim() ? { thoughts } : {})
       });
       
-      const historyItem = await storage.createHistoryItem(historyData);
+      // Get interpretation data based on the time
+      // This would usually come from a database, but since our data is generated dynamically,
+      // we'll need to regenerate it when saving to ensure consistency
+      const { time, type } = historyData;
+      
+      // Get interpretation details (this would come from the client as well)
+      // For API only requests, we'd regenerate the interpretation
+      const details = JSON.stringify(req.body.details || {}); 
+      
+      // Create history item with details
+      const historyItem = await storage.createHistoryItem({
+        ...historyData,
+        details
+      });
+      
       return res.status(201).json(historyItem);
     } catch (error) {
       if (error instanceof z.ZodError) {
         return res.status(400).json({ message: error.message });
       }
+      console.error("Error saving history:", error);
       return res.status(500).json({ message: "Failed to save history item" });
     }
   });

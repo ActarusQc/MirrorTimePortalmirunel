@@ -15,6 +15,7 @@ export const historyItems = pgTable("history_items", {
   time: text("time").notNull(),
   type: text("type").notNull(),
   thoughts: text("thoughts"),
+  details: text("details"),
   savedAt: timestamp("saved_at").defaultNow().notNull(),
 });
 
@@ -29,6 +30,7 @@ export const insertHistoryItemSchema = createInsertSchema(historyItems).pick({
   time: true,
   type: true,
   thoughts: true,
+  details: true,
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;

@@ -40,6 +40,11 @@ export default function TimeInterpretation({
         userId: user.id,
         time,
         type: interpretation.type,
+        details: {
+          spiritual: interpretation.spiritual,
+          angel: interpretation.angel,
+          numerology: interpretation.numerology
+        }
       });
       
       // Also save to localStorage for quick access

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from '@/lib/queryClient';
 import { PencilIcon, CheckIcon, SaveIcon } from 'lucide-react';
+import { useTimeInterpretation } from '@/hooks/useTimeInterpretation';
 
 interface ThoughtsRecorderProps {
   time: string;
@@ -22,6 +23,9 @@ export default function ThoughtsRecorder({ time, timeType, onSaved }: ThoughtsRe
   const [thoughts, setThoughts] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  
+  // Get the interpretation data for this time
+  const { data: interpretation } = useTimeInterpretation(time);
 
   const handleSaveThoughts = async () => {
     if (!isLoggedIn || !user) {
@@ -49,6 +53,11 @@ export default function ThoughtsRecorder({ time, timeType, onSaved }: ThoughtsRe
         time,
         type: timeType,
         thoughts,
+        details: interpretation ? {
+          spiritual: interpretation.spiritual,
+          angel: interpretation.angel,
+          numerology: interpretation.numerology
+        } : {}
       });
 
       setIsSaved(true);

@@ -61,10 +61,24 @@ export default function History() {
       }
       
       const data = await response.json();
-      setHistoryItems(data);
+      
+      // Parse the details JSON for each item
+      const processedData = data.map((item: any) => ({
+        ...item,
+        // Parse the details field if it exists and is a string
+        details: item.details && typeof item.details === 'string' 
+          ? JSON.parse(item.details) 
+          : item.details || {
+              spiritual: { title: '', description: '' },
+              angel: { name: '', message: '' },
+              numerology: { title: '', analysis: '' }
+            }
+      }));
+      
+      setHistoryItems(processedData);
       
       // Also save to localStorage for backup
-      localStorage.setItem(`mirrorTime_history_${user.id}`, JSON.stringify(data));
+      localStorage.setItem(`mirrorTime_history_${user.id}`, JSON.stringify(processedData));
     } catch (err) {
       console.error('Error fetching history:', err);
       setError('Failed to load history. Using local data if available.');
