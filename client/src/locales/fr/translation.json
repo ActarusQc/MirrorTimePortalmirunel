@@ -21,15 +21,24 @@
     "reversedHour": "Heure Inversée",
     "regularHour": "Heure Normale"
   },
+  "timeTypes": {
+    "mirror": "Heure Miroir",
+    "reversed": "Heure Inversée",
+    "regular": "Heure Normale"
+  },
   "interpretation": {
     "spiritualTab": "Signification Spirituelle",
     "angelTab": "Message de l'Ange",
     "numerologyTab": "Numérologie",
     "divineGuidance": "Guidance Divine:",
     "rootNumber": "Nombre Racine",
-    "mirrorAmplification": "Amplification du Miroir"
+    "mirrorAmplification": "Amplification du Miroir",
+    "saveButton": "Enregistrer dans Mon Historique",
+    "toSave": "pour sauvegarder les interprétations"
   },
   "auth": {
+    "login": "Se connecter",
+    "signup": "S'inscrire",
     "loginTitle": "Connexion",
     "signupTitle": "Créer un Compte",
     "username": "Nom d'utilisateur",
@@ -57,8 +66,8 @@
     "deleteButton": "Supprimer"
   },
   "toast": {
-    "saveSuccess": "Enregistré dans l'Historique",
-    "saveDescription": "L'interprétation pour {{time}} a été enregistrée dans votre historique.",
+    "savedTitle": "Enregistré dans l'Historique",
+    "savedDescription": "L'interprétation pour {{time}} a été enregistrée dans votre historique.",
     "loginSuccess": "Succès",
     "loginDescription": "Vous vous êtes connecté avec succès",
     "accountCreated": "Compte Créé",
@@ -73,5 +82,12 @@
   "language": {
     "english": "Anglais",
     "french": "Français"
+  },
+  "timeForm": {
+    "label": "Entrez l'heure (format 24h)",
+    "searchAriaLabel": "Rechercher l'interprétation de l'heure"
+  },
+  "common": {
+    "or": "ou"
   }
 }

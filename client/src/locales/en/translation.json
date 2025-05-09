@@ -21,15 +21,24 @@
     "reversedHour": "Reversed Hour",
     "regularHour": "Regular Hour"
   },
+  "timeTypes": {
+    "mirror": "Mirror Hour",
+    "reversed": "Reversed Hour",
+    "regular": "Regular Hour"
+  },
   "interpretation": {
     "spiritualTab": "Spiritual Meaning",
     "angelTab": "Angel Message",
     "numerologyTab": "Numerology",
     "divineGuidance": "Divine Guidance:",
     "rootNumber": "Root Number",
-    "mirrorAmplification": "Mirror Amplification"
+    "mirrorAmplification": "Mirror Amplification",
+    "saveButton": "Save to My History",
+    "toSave": "to save interpretations"
   },
   "auth": {
+    "login": "Log in",
+    "signup": "Sign up",
     "loginTitle": "Log In",
     "signupTitle": "Create Account",
     "username": "Username",
@@ -57,8 +66,8 @@
     "deleteButton": "Delete"
   },
   "toast": {
-    "saveSuccess": "Saved to History",
-    "saveDescription": "The interpretation for {{time}} has been saved to your history.",
+    "savedTitle": "Saved to History",
+    "savedDescription": "The interpretation for {{time}} has been saved to your history.",
     "loginSuccess": "Success",
     "loginDescription": "You have been logged in successfully",
     "accountCreated": "Account Created",
@@ -73,5 +82,12 @@
   "language": {
     "english": "English",
     "french": "French"
+  },
+  "timeForm": {
+    "label": "Enter Time (24-hour format)",
+    "searchAriaLabel": "Search time interpretation"
+  },
+  "common": {
+    "or": "or"
   }
 }
