@@ -10,12 +10,12 @@ import { useTimeInterpretation } from "@/hooks/useTimeInterpretation";
 import { Interpretation } from "@/lib/timeUtils";
 
 export default function Home() {
+  const { t } = useTranslation();
   const [time, setTime] = useState<string | null>(null);
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const { isLoggedIn } = useAuth();
   const { interpretation, timeType } = useTimeInterpretation(time);
-  const { t } = useTranslation();
 
   const handleTimeSubmit = (timeValue: string) => {
     setTime(timeValue);
