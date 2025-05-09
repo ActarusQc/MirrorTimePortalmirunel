@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/hooks/useAuth';
-import { Bookmark } from 'lucide-react';
+import { Bookmark, PencilIcon, SaveIcon } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
@@ -10,7 +10,8 @@ import { useToast } from '@/hooks/use-toast';
 import { Interpretation } from '@/lib/timeUtils';
 import { apiRequest } from '@/lib/queryClient';
 import ShareInterpretation from '@/components/ShareInterpretation';
-import ThoughtsRecorder from '@/components/ThoughtsRecorder';
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 interface TimeInterpretationProps {
   time: string;
@@ -28,11 +29,16 @@ export default function TimeInterpretation({
   const { isLoggedIn, user } = useAuth();
   const { toast } = useToast();
   const { t } = useTranslation();
+  const [thoughts, setThoughts] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   
   const handleSaveInterpretation = async () => {
     if (!isLoggedIn || !user) {
       return;
     }
+    
+    setIsSaving(true);
     
     try {
       // Save to API
@@ -40,6 +46,7 @@ export default function TimeInterpretation({
         userId: user.id,
         time,
         type: interpretation.type,
+        thoughts: thoughts.trim() ? thoughts : undefined,
         details: {
           spiritual: interpretation.spiritual,
           angel: interpretation.angel,
@@ -56,6 +63,7 @@ export default function TimeInterpretation({
         id: Date.now(),
         time,
         type: interpretation.type,
+        thoughts: thoughts.trim() ? thoughts : undefined,
         savedAt: new Date(),
         details: {
           spiritual: interpretation.spiritual,
@@ -66,6 +74,8 @@ export default function TimeInterpretation({
       
       history = [newHistoryItem, ...history];
       localStorage.setItem(historyKey, JSON.stringify(history));
+      
+      setIsSaved(true);
       
       toast({
         title: t('toast.savedTitle'),
@@ -81,6 +91,8 @@ export default function TimeInterpretation({
         variant: 'destructive',
         duration: 3000,
       });
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -243,13 +255,26 @@ export default function TimeInterpretation({
                 </>
               )}
               
-              {/* ThoughtsRecorder component */}
+              {/* Thoughts input */}
               {isLoggedIn && (
-                <ThoughtsRecorder 
-                  time={time} 
-                  timeType={interpretation.type} 
-                  onSaved={handleSaveInterpretation}
-                />
+                <div className="mt-4 border rounded-md p-4 bg-card">
+                  <div className="space-y-2">
+                    <Label htmlFor="thoughts">
+                      <div className="flex items-center">
+                        <PencilIcon className="h-4 w-4 mr-2" />
+                        {t('thoughts.prompt')}
+                      </div>
+                    </Label>
+                    <Textarea
+                      id="thoughts"
+                      placeholder={t('thoughts.placeholder')}
+                      value={thoughts}
+                      onChange={(e) => setThoughts(e.target.value)}
+                      className="min-h-[100px]"
+                      disabled={isSaving || isSaved}
+                    />
+                  </div>
+                </div>
               )}
               
               {/* Share interpretation component */}

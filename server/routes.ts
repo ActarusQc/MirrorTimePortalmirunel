@@ -49,28 +49,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // History routes
   app.post("/api/history", async (req, res) => {
     try {
-      // Include thoughts if provided
-      const { thoughts, ...requiredData } = req.body;
-      const historyData = insertHistoryItemSchema.parse({
+      // Extract fields from request body
+      const { thoughts, details, ...requiredData } = req.body;
+      
+      // Prepare history data with thought if provided
+      const historyData = {
         ...requiredData,
         // Only include thoughts if it has content
-        ...(thoughts && thoughts.trim() ? { thoughts } : {})
-      });
+        ...(thoughts && thoughts.trim() ? { thoughts } : {}),
+        // Convert details object to JSON string with max 5000 chars
+        details: details ? JSON.stringify(details).substring(0, 5000) : null
+      };
       
-      // Get interpretation data based on the time
-      // This would usually come from a database, but since our data is generated dynamically,
-      // we'll need to regenerate it when saving to ensure consistency
-      const { time, type } = historyData;
+      // Validate with zod schema
+      const validHistoryData = insertHistoryItemSchema.parse(historyData);
       
-      // Get interpretation details (this would come from the client as well)
-      // For API only requests, we'd regenerate the interpretation
-      const details = JSON.stringify(req.body.details || {}); 
-      
-      // Create history item with details
-      const historyItem = await storage.createHistoryItem({
-        ...historyData,
-        details
-      });
+      // Create history item
+      const historyItem = await storage.createHistoryItem(validHistoryData);
       
       return res.status(201).json(historyItem);
     } catch (error) {
