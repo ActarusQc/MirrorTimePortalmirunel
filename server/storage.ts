@@ -12,10 +12,11 @@ export interface IStorage {
   createHistoryItem(item: InsertHistoryItem): Promise<HistoryItem>;
   getHistoryByUserId(userId: number): Promise<HistoryItem[]>;
   deleteHistoryItem(id: number): Promise<void>;
+  findRecentDuplicateItem(userId: number, time: string, type: string): Promise<HistoryItem | undefined>;
 }
 
 import { db } from "./db";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, and, gt } from "drizzle-orm";
 
 export class DatabaseStorage implements IStorage {
   async getUser(id: number): Promise<User | undefined> {
@@ -112,6 +113,25 @@ export class DatabaseStorage implements IStorage {
     await db
       .delete(historyItems)
       .where(eq(historyItems.id, id));
+  }
+  
+  async findRecentDuplicateItem(userId: number, time: string, type: string): Promise<HistoryItem | undefined> {
+    const oneMinuteAgo = new Date(Date.now() - 60 * 1000); // 1 minute ago
+    
+    // Find items with same time and type for the user in the last minute
+    const [item] = await db
+      .select()
+      .from(historyItems)
+      .where(
+        sql`${historyItems.userId} = ${userId} AND 
+            ${historyItems.time} = ${time} AND 
+            ${historyItems.type} = ${type} AND
+            ${historyItems.savedAt} > ${oneMinuteAgo.toISOString()}`
+      )
+      .orderBy(desc(historyItems.savedAt))
+      .limit(1);
+      
+    return item;
   }
 }
 
