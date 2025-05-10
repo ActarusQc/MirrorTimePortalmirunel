@@ -30,6 +30,7 @@ interface HistoryItem {
     spiritual: { title: string; description: string; };
     angel: { name: string; message: string; };
     numerology: { title: string; analysis: string; };
+    aiAnalysis?: { title: string; description: string; };
     isAiGenerated?: boolean;
   };
 }
@@ -247,10 +248,10 @@ export default function History() {
                     <TabsContent value="spiritual" className="mt-4">
                       <div className="bg-[#EFE7DC] p-6 rounded-[12px] border border-[#D8C3A5]/30 shadow-md">
                         <h4 className="font-marcellus text-[#7A5A9E] mb-3 font-semibold text-base">
-                          {item.details.spiritual.title}
+                          {item.details.spiritual?.title || t('interpretation.spiritualTab')}
                         </h4>
                         <p className="text-[#5C4E4E] text-[15.5px] leading-relaxed">
-                          {item.details.spiritual.description}
+                          {item.details.spiritual?.description || t('history.noContentForTab')}
                         </p>
                       </div>
                     </TabsContent>
@@ -283,7 +284,12 @@ export default function History() {
                       <TabsContent value="analysis" className="mt-4">
                         <div className="bg-[#EFE7DC] p-6 rounded-[12px] border border-[#D8C3A5]/30 shadow-md">
                           <h4 className="font-marcellus text-[#7A5A9E] mb-3 font-semibold text-base">{t('analysis.title')}</h4>
-                          <p className="text-[#5C4E4E] text-[15.5px] leading-relaxed">{item.details.spiritual.description}</p>
+                          {/* Use the new aiAnalysis field if available, or fallback to spiritual description for backwards compatibility */}
+                          <p className="text-[#5C4E4E] text-[15.5px] leading-relaxed">
+                            {item.details.isAiGenerated && item.details.aiAnalysis 
+                              ? item.details.aiAnalysis.description 
+                              : (item.details.isAiGenerated ? item.details.spiritual.description : t('history.noContentForTab'))}
+                          </p>
                         </div>
                       </TabsContent>
                     )}
