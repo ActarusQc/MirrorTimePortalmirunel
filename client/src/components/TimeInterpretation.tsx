@@ -163,15 +163,18 @@ export default function TimeInterpretation({
                 </div>
               </div>
               <div className="md:w-2/3">
-                <h3 className="text-xl md:text-2xl font-playfair font-bold text-primary mb-3">
+                <h3 className="text-xl md:text-2xl font-marcellus font-bold text-[#9F84B5] mb-4 tracking-wide">
                   {interpretation.spiritual.title}
                 </h3>
-                <p className="text-mediumgray mb-4">
+                <p className="text-[#6A4F6B] mb-4 leading-relaxed">
                   {interpretation.spiritual.description}
                 </p>
-                <p className="text-mediumgray">
-                  {interpretation.spiritual.guidance}
-                </p>
+                <div className="bg-[#F5ECE6] p-5 rounded-[12px] mb-3 border border-[#D8C3A5]/40 shadow-sm">
+                  <h4 className="font-marcellus font-semibold text-[#9F84B5] mb-2 tracking-wide">{t('interpretation.guidance')}</h4>
+                  <p className="text-[#6A4F6B] leading-relaxed">
+                    {interpretation.spiritual.guidance}
+                  </p>
+                </div>
               </div>
             </div>
           </TabsContent>
@@ -194,15 +197,15 @@ export default function TimeInterpretation({
                 </div>
               </div>
               <div className="md:w-2/3">
-                <h3 className="text-xl md:text-2xl font-playfair font-bold text-primary mb-3">
+                <h3 className="text-xl md:text-2xl font-marcellus font-bold text-[#9F84B5] mb-4 tracking-wide">
                   {interpretation.angel.name}
                 </h3>
-                <p className="text-mediumgray mb-4">
+                <p className="text-[#6A4F6B] mb-4 leading-relaxed">
                   {interpretation.angel.message}
                 </p>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h4 className="font-medium text-primary mb-2">{t('interpretation.divineGuidance')}:</h4>
-                  <p className="text-mediumgray italic">
+                <div className="bg-[#F5ECE6] p-5 rounded-[12px] mb-3 border border-[#D8C3A5]/40 shadow-sm">
+                  <h4 className="font-marcellus font-semibold text-[#9F84B5] mb-2 tracking-wide">{t('interpretation.divineGuidance')}:</h4>
+                  <p className="text-[#6A4F6B] italic leading-relaxed">
                     {interpretation.angel.guidance}
                   </p>
                 </div>
@@ -228,26 +231,28 @@ export default function TimeInterpretation({
                 </div>
               </div>
               <div className="md:w-2/3">
-                <h3 className="text-xl md:text-2xl font-playfair font-bold text-primary mb-3">
+                <h3 className="text-xl md:text-2xl font-marcellus font-bold text-[#9F84B5] mb-4 tracking-wide">
                   {interpretation.numerology.title}
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <div className="bg-gray-50 p-3 rounded-lg">
-                    <h4 className="font-medium text-primary mb-1">{t('interpretation.rootNumber')}</h4>
-                    <p className="text-mediumgray">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+                  <div className="bg-[#F5ECE6] p-4 rounded-[12px] border border-[#D8C3A5]/40 shadow-sm">
+                    <h4 className="font-marcellus font-semibold text-[#9F84B5] mb-2 tracking-wide">{t('interpretation.rootNumber')}</h4>
+                    <p className="text-[#6A4F6B] leading-relaxed">
                       {interpretation.numerology.rootNumber}
                     </p>
                   </div>
-                  <div className="bg-gray-50 p-3 rounded-lg">
-                    <h4 className="font-medium text-primary mb-1">{t('interpretation.mirrorAmplification')}</h4>
-                    <p className="text-mediumgray">
+                  <div className="bg-[#F5ECE6] p-4 rounded-[12px] border border-[#D8C3A5]/40 shadow-sm">
+                    <h4 className="font-marcellus font-semibold text-[#9F84B5] mb-2 tracking-wide">{t('interpretation.mirrorAmplification')}</h4>
+                    <p className="text-[#6A4F6B] leading-relaxed">
                       {interpretation.numerology.mirrorEffect}
                     </p>
                   </div>
                 </div>
-                <p className="text-mediumgray">
-                  {interpretation.numerology.analysis}
-                </p>
+                <div className="bg-white p-5 rounded-[12px] border border-[#D8C3A5] shadow-sm">
+                  <p className="text-[#6A4F6B] leading-relaxed">
+                    {interpretation.numerology.analysis}
+                  </p>
+                </div>
               </div>
             </div>
           </TabsContent>
