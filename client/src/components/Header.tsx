@@ -57,7 +57,7 @@ export default function Header() {
           <img 
             src={logoImage} 
             alt="Mirunel Logo" 
-            className="h-8 md:h-10" 
+            className="h-7 md:h-9 hover-scale" 
           />
         </div>
         
