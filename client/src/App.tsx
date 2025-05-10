@@ -22,7 +22,7 @@ function App() {
   return (
     <AuthProvider>
       <TooltipProvider>
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col bg-[#FDF8F4]">
           <Header />
           <main className="flex-grow">
             <Router />

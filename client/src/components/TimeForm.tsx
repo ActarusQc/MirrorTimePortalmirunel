@@ -35,25 +35,25 @@ export default function TimeForm({ onSubmit }: TimeFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="bg-white rounded-xl shadow-md p-6">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="bg-white rounded-[12px] shadow-card p-6 transition-all duration-300 hover:shadow-lg fade-in-card">
         <FormField
           control={form.control}
           name="time"
           render={({ field }) => (
             <FormItem className="mb-6">
-              <FormLabel className="block text-mediumgray mb-2 font-medium">{t('timeForm.label')}</FormLabel>
+              <FormLabel className="block text-primary mb-2 font-medium tracking-wide">{t('timeForm.label')}</FormLabel>
               <div className="relative">
                 <FormControl>
                   <Input
                     {...field}
                     type="time"
-                    className="time-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-lg"
+                    className="time-input w-full px-4 py-3 border border-[#D8C3A5]/50 rounded-[12px] focus:outline-none focus:ring-2 focus:ring-primary text-lg bg-[#FDF8F4]/50"
                     placeholder="HH:MM"
                   />
                 </FormControl>
                 <button
                   type="submit"
-                  className="absolute right-3 top-3 text-primary hover:text-secondary transition-colors"
+                  className="absolute right-3 top-3 text-primary hover:text-secondary transition-all duration-300 hover-scale"
                   aria-label={t('timeForm.searchAriaLabel')}
                 >
                   <Search className="h-5 w-5" />

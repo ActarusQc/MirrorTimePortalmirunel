@@ -36,8 +36,8 @@ export default function Home() {
       {/* Time input section */}
       <section className="max-w-md mx-auto mb-10">
         <div className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-playfair font-bold text-dark mb-2">{t('home.title')}</h2>
-          <p className="text-mediumgray">{t('home.subtitle')}</p>
+          <h2 className="text-2xl md:text-3xl font-medium text-primary mb-3 tracking-wide">{t('home.title')}</h2>
+          <p className="text-muted-foreground text-sm md:text-base">{t('home.subtitle')}</p>
         </div>
         
         <TimeForm onSubmit={handleTimeSubmit} />
