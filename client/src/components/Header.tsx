@@ -48,16 +48,16 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-[#9F84B5] text-white shadow-md">
+    <header className="bg-[#D8C3A5] text-[#6A4F6B] shadow-md">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div 
-          className="flex items-center space-x-2 cursor-pointer pill-bg" 
+          className="flex items-center space-x-2 cursor-pointer bg-[#9F84B5] px-4 py-2 rounded-full shadow-sm border border-white/20" 
           onClick={() => setLocation('/')}
         >
           <img 
             src={logoImage} 
             alt="Mirunel Logo" 
-            className="h-7 md:h-9 hover-scale glow-effect brightness-125" 
+            className="h-7 md:h-9 hover-scale brightness-[1.5] filter drop-shadow-[0_0_3px_rgba(255,255,255,0.7)]" 
           />
         </div>
         
@@ -67,7 +67,7 @@ export default function Header() {
             <Button 
               onClick={handleShowHistory} 
               variant="outline" 
-              className="header-button bg-white bg-opacity-25 hover:bg-opacity-40 border-1 border-white/30 text-white font-medium shadow-sm"
+              className="header-button bg-[#9F84B5] hover:bg-[#8A6C9F] border-1 border-white/30 text-white font-medium shadow-sm"
             >
               <History className="h-5 w-5 md:mr-2 hover-scale" />
               <span className="hidden md:inline">{t('header.historyButton')}</span>
@@ -79,23 +79,23 @@ export default function Header() {
               <DropdownMenuTrigger asChild>
                 <Button 
                   variant="ghost" 
-                  className="p-0 h-10 w-10 rounded-full border-2 border-white/40 shadow-sm" 
+                  className="p-0 h-10 w-10 rounded-full border-2 border-[#9F84B5]/70 shadow-sm" 
                   aria-label="User menu"
                 >
-                  <Avatar className="h-8 w-8 bg-white cursor-pointer">
-                    <AvatarFallback className="text-[#9F84B5] font-bold">{getInitials(user.username)}</AvatarFallback>
+                  <Avatar className="h-8 w-8 bg-[#9F84B5] cursor-pointer">
+                    <AvatarFallback className="text-white font-bold">{getInitials(user.username)}</AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="border-[#D8C3A5]/50 bg-white/95 shadow-card">
-                <DropdownMenuItem className="md:hidden focus:bg-[#F5ECE6] focus:text-[#6A4F6B]" onClick={handleShowHistory}>
+              <DropdownMenuContent align="end" className="border-[#D8C3A5]/50 bg-white/95 shadow-md">
+                <DropdownMenuItem className="md:hidden hover:bg-[#F5ECE6] focus:bg-[#F5ECE6]" onClick={handleShowHistory}>
                   <History className="h-5 w-5 mr-2 text-[#9F84B5]" />
                   <span className="text-[#6A4F6B] font-medium">{t('header.historyButton')}</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="md:hidden bg-[#D8C3A5]/30" />
                 <DropdownMenuItem 
                   onClick={handleLogout}
-                  className="focus:bg-[#F5ECE6] focus:text-[#6A4F6B]"
+                  className="hover:bg-[#F5ECE6] focus:bg-[#F5ECE6]"
                 >
                   <LogOut className="h-5 w-5 mr-2 text-[#9F84B5]" />
                   <span className="text-[#6A4F6B] font-medium">{t('header.logoutButton')}</span>
