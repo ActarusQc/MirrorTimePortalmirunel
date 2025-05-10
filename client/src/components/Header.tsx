@@ -63,7 +63,7 @@ export default function Header() {
         
         {isLoggedIn && user ? (
           <div className="flex items-center space-x-3">
-            <span className="text-sm md:text-base hidden md:inline">{user.username}</span>
+            <span className="text-sm md:text-base hidden md:inline text-[#6A4F6B] font-medium">{user.username}</span>
             <Button 
               onClick={handleShowHistory} 
               variant="outline" 
@@ -108,14 +108,14 @@ export default function Header() {
             <LanguageSwitcher />
             <Button
               onClick={handleShowLoginModal}
-              variant="ghost"
-              className="text-sm md:text-base bg-white bg-opacity-25 hover:bg-opacity-40 text-white mr-3 font-medium shadow-sm px-5 py-2 border border-white/20"
+              variant="outline"
+              className="text-sm md:text-base bg-[#9F84B5] hover:bg-[#8A6C9F] text-white mr-3 font-medium shadow-sm px-5 py-2 border border-white/30"
             >
               {t('header.loginButton')}
             </Button>
             <Button
               onClick={handleShowSignupModal}
-              className="text-sm md:text-base bg-[#F5B7B1] text-[#6A4F6B] hover:bg-[#F5B7B1]/90 font-medium shadow-sm px-5 py-2"
+              className="text-sm md:text-base bg-[#F5B7B1] text-[#6A4F6B] hover:bg-[#F5B7B1]/90 font-medium shadow-md px-5 py-2 border border-[#F5B7B1]/30"
             >
               {t('header.signupButton')}
             </Button>

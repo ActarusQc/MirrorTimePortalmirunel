@@ -88,18 +88,18 @@
     box-shadow: 0 6px 12px rgba(106, 79, 107, 0.08);
   }
   
-  /* Enhanced hover effects for interactive elements */
+  /* Soft glow effect for important elements */
+  .glow-effect {
+    filter: drop-shadow(0 0 4px rgba(179, 155, 200, 0.5));
+  }
+  
+  /* Hover scale effect for interactive elements */
   .hover-scale {
     transition: transform 0.2s ease;
   }
   
   .hover-scale:hover {
-    transform: scale(1.08);
-  }
-  
-  /* Soft glow effect for important elements */
-  .glow-effect {
-    filter: drop-shadow(0 0 4px rgba(179, 155, 200, 0.5));
+    transform: scale(1.1);
   }
   
   /* Cream colored pill background */
