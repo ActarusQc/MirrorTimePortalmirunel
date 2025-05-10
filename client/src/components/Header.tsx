@@ -48,16 +48,16 @@ export default function Header() {
   };
 
   return (
-    <header className="gradient-bg text-white shadow-md">
+    <header className="bg-[#9F84B5] text-white shadow-md">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div 
-          className="flex items-center space-x-2 cursor-pointer" 
+          className="flex items-center space-x-2 cursor-pointer pill-bg" 
           onClick={() => setLocation('/')}
         >
           <img 
             src={logoImage} 
             alt="Mirunel Logo" 
-            className="h-7 md:h-9 hover-scale" 
+            className="h-7 md:h-9 hover-scale glow-effect brightness-125" 
           />
         </div>
         
@@ -67,9 +67,9 @@ export default function Header() {
             <Button 
               onClick={handleShowHistory} 
               variant="outline" 
-              className="bg-white bg-opacity-20 hover:bg-opacity-30 border-0 text-white"
+              className="header-button bg-white bg-opacity-25 hover:bg-opacity-40 border-1 border-white/30 text-white font-medium shadow-sm"
             >
-              <History className="h-4 w-4 md:mr-1" />
+              <History className="h-5 w-5 md:mr-2 hover-scale" />
               <span className="hidden md:inline">{t('header.historyButton')}</span>
             </Button>
             
