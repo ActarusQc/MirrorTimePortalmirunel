@@ -63,7 +63,8 @@
     "deleteConfirmTitle": "Supprimer l'interprétation",
     "deleteConfirmMessage": "Êtes-vous sûr de vouloir supprimer cette interprétation de votre historique? Cette action ne peut pas être annulée.",
     "cancelButton": "Annuler",
-    "deleteButton": "Supprimer"
+    "deleteButton": "Supprimer",
+    "noContentForTab": "Aucun contenu disponible pour cette section."
   },
   "toast": {
     "savedTitle": "Enregistré dans l'Historique",
@@ -163,6 +164,7 @@
     "deleteTitle": "Supprimer l'Interprétation",
     "deleteConfirmation": "Êtes-vous sûr de vouloir supprimer cette interprétation de votre historique ? Cette action ne peut pas être annulée.",
     "deleteSuccess": "Supprimé avec Succès",
-    "deleteSuccessDescription": "L'interprétation a été supprimée de votre historique."
+    "deleteSuccessDescription": "L'interprétation a été supprimée de votre historique.",
+    "noContentForTab": "Aucun contenu disponible pour cette section."
   }
 }

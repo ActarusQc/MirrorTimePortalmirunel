@@ -224,26 +224,19 @@ export default function History() {
                     </div>
                   </div>
                   
-                  <Tabs defaultValue="spiritual">
-                    {item.details.isAiGenerated ? (
-                      /* AI-generated analysis has only one tab */
-                      <TabsList className={`grid w-full ${item.thoughts ? 'grid-cols-2' : 'grid-cols-1'} bg-[#FDF8F4]/80 border-[#D8C3A5]/20`}>
-                        <TabsTrigger value="spiritual" className="data-[state=active]:bg-white data-[state=active]:text-[#B39BC8] data-[state=active]:shadow-sm">{t('analysis.title')}</TabsTrigger>
-                        {item.thoughts && (
-                          <TabsTrigger value="thoughts" className="data-[state=active]:bg-white data-[state=active]:text-[#B39BC8] data-[state=active]:shadow-sm">{t('thoughts.myThoughts')}</TabsTrigger>
-                        )}
-                      </TabsList>
-                    ) : (
-                      /* Standard interpretation has three tabs */
-                      <TabsList className={`grid w-full ${item.thoughts ? 'grid-cols-4' : 'grid-cols-3'} bg-[#FDF8F4]/80 border-[#D8C3A5]/20`}>
-                        <TabsTrigger value="spiritual" className="data-[state=active]:bg-white data-[state=active]:text-[#B39BC8] data-[state=active]:shadow-sm">{t('interpretation.spiritualTab')}</TabsTrigger>
-                        <TabsTrigger value="angel" className="data-[state=active]:bg-white data-[state=active]:text-[#B39BC8] data-[state=active]:shadow-sm">{t('interpretation.angelTab')}</TabsTrigger>
-                        <TabsTrigger value="numerology" className="data-[state=active]:bg-white data-[state=active]:text-[#B39BC8] data-[state=active]:shadow-sm">{t('interpretation.numerologyTab')}</TabsTrigger>
-                        {item.thoughts && (
-                          <TabsTrigger value="thoughts" className="data-[state=active]:bg-white data-[state=active]:text-[#B39BC8] data-[state=active]:shadow-sm">{t('thoughts.myThoughts')}</TabsTrigger>
-                        )}
-                      </TabsList>
-                    )}
+                  <Tabs defaultValue={item.details.isAiGenerated ? "analysis" : "spiritual"}>
+                    {/* All items have 3-4 base tabs + optional analysis tab if AI-generated */}
+                    <TabsList className={`grid w-full ${item.thoughts ? (item.details.isAiGenerated ? 'grid-cols-5' : 'grid-cols-4') : (item.details.isAiGenerated ? 'grid-cols-4' : 'grid-cols-3')} bg-[#FDF8F4]/80 border-[#D8C3A5]/20`}>
+                      <TabsTrigger value="spiritual" className="data-[state=active]:bg-white data-[state=active]:text-[#B39BC8] data-[state=active]:shadow-sm">{t('interpretation.spiritualTab')}</TabsTrigger>
+                      <TabsTrigger value="angel" className="data-[state=active]:bg-white data-[state=active]:text-[#B39BC8] data-[state=active]:shadow-sm">{t('interpretation.angelTab')}</TabsTrigger>
+                      <TabsTrigger value="numerology" className="data-[state=active]:bg-white data-[state=active]:text-[#B39BC8] data-[state=active]:shadow-sm">{t('interpretation.numerologyTab')}</TabsTrigger>
+                      {item.details.isAiGenerated && (
+                        <TabsTrigger value="analysis" className="data-[state=active]:bg-white data-[state=active]:text-[#B39BC8] data-[state=active]:shadow-sm">{t('analysis.title')}</TabsTrigger>
+                      )}
+                      {item.thoughts && (
+                        <TabsTrigger value="thoughts" className="data-[state=active]:bg-white data-[state=active]:text-[#B39BC8] data-[state=active]:shadow-sm">{t('thoughts.myThoughts')}</TabsTrigger>
+                      )}
+                    </TabsList>
                     
                     <TabsContent value="spiritual" className="mt-4">
                       <div className="bg-[#EFE7DC] p-6 rounded-[12px] border border-[#D8C3A5]/30 shadow-md">
@@ -256,22 +249,27 @@ export default function History() {
                       </div>
                     </TabsContent>
                     
-                    {!item.details.isAiGenerated && (
-                      <>
-                        <TabsContent value="angel" className="mt-4">
-                          <div className="bg-[#EFE7DC] p-6 rounded-[12px] border border-[#D8C3A5]/30 shadow-md">
-                            <h4 className="font-marcellus text-[#7A5A9E] mb-3 font-semibold text-base">{item.details.angel.name}</h4>
-                            <p className="text-[#5C4E4E] text-[15.5px] leading-relaxed">{item.details.angel.message}</p>
-                          </div>
-                        </TabsContent>
-                        
-                        <TabsContent value="numerology" className="mt-4">
-                          <div className="bg-[#EFE7DC] p-6 rounded-[12px] border border-[#D8C3A5]/30 shadow-md">
-                            <h4 className="font-marcellus text-[#7A5A9E] mb-3 font-semibold text-base">{item.details.numerology.title}</h4>
-                            <p className="text-[#5C4E4E] text-[15.5px] leading-relaxed">{item.details.numerology.analysis}</p>
-                          </div>
-                        </TabsContent>
-                      </>
+                    <TabsContent value="angel" className="mt-4">
+                      <div className="bg-[#EFE7DC] p-6 rounded-[12px] border border-[#D8C3A5]/30 shadow-md">
+                        <h4 className="font-marcellus text-[#7A5A9E] mb-3 font-semibold text-base">{item.details.angel.name || t('interpretation.angelTab')}</h4>
+                        <p className="text-[#5C4E4E] text-[15.5px] leading-relaxed">{item.details.angel.message || t('history.noContentForTab')}</p>
+                      </div>
+                    </TabsContent>
+                    
+                    <TabsContent value="numerology" className="mt-4">
+                      <div className="bg-[#EFE7DC] p-6 rounded-[12px] border border-[#D8C3A5]/30 shadow-md">
+                        <h4 className="font-marcellus text-[#7A5A9E] mb-3 font-semibold text-base">{item.details.numerology.title || t('interpretation.numerologyTab')}</h4>
+                        <p className="text-[#5C4E4E] text-[15.5px] leading-relaxed">{item.details.numerology.analysis || t('history.noContentForTab')}</p>
+                      </div>
+                    </TabsContent>
+                    
+                    {item.details.isAiGenerated && (
+                      <TabsContent value="analysis" className="mt-4">
+                        <div className="bg-[#EFE7DC] p-6 rounded-[12px] border border-[#D8C3A5]/30 shadow-md">
+                          <h4 className="font-marcellus text-[#7A5A9E] mb-3 font-semibold text-base">{t('analysis.title')}</h4>
+                          <p className="text-[#5C4E4E] text-[15.5px] leading-relaxed">{item.details.spiritual.description}</p>
+                        </div>
+                      </TabsContent>
                     )}
                     
                     {item.thoughts && (

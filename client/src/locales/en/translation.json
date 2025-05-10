@@ -63,7 +63,8 @@
     "deleteConfirmTitle": "Delete interpretation",
     "deleteConfirmMessage": "Are you sure you want to remove this interpretation from your history? This action cannot be undone.",
     "cancelButton": "Cancel",
-    "deleteButton": "Delete"
+    "deleteButton": "Delete",
+    "noContentForTab": "No content available for this section."
   },
   "toast": {
     "savedTitle": "Saved to History",
@@ -163,6 +164,7 @@
     "deleteTitle": "Delete Interpretation",
     "deleteConfirmation": "Are you sure you want to remove this interpretation from your history? This action cannot be undone.",
     "deleteSuccess": "Deleted Successfully",
-    "deleteSuccessDescription": "The interpretation has been removed from your history."
+    "deleteSuccessDescription": "The interpretation has been removed from your history.",
+    "noContentForTab": "No content available for this section."
   }
 }
