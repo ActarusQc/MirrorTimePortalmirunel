@@ -446,33 +446,14 @@ export default function ShareInterpretation({ time, interpretation }: ShareInter
   // No need for getTabContent function since we now display all three sections
 
   return (
-    <div className="mt-6 flex justify-center">
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button className="bg-primary text-white hover:bg-secondary transition-colors">
-            <Share2 className="h-4 w-4 mr-2" />
-            {t('share.shareButton')}
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="center">
-          <DropdownMenuItem onClick={handleDownload} disabled={isGenerating}>
-            <Download className="h-4 w-4 mr-2" />
-            {t('share.download')}
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleCopyToClipboard} disabled={isGenerating}>
-            {isLinkCopied ? (
-              <Check className="h-4 w-4 mr-2" />
-            ) : (
-              <Copy className="h-4 w-4 mr-2" />
-            )}
-            {isLinkCopied ? t('share.copied') : t('share.copyImage')}
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleShare} disabled={isGenerating}>
-            <Share2 className="h-4 w-4 mr-2" />
-            {t('share.share')}
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
+    <Button 
+      onClick={handleShare} 
+      disabled={isGenerating}
+      className="w-full bg-primary text-white py-6 hover:bg-primary/90 transition-colors"
+      variant="default"
+    >
+      <Share2 className="h-4 w-4 mr-2" />
+      {t('share.shareButton')}
+    </Button>
   );
 }
