@@ -6,7 +6,7 @@ import { useAuth } from '@/hooks/useAuth';
 import LoginModal from '@/components/auth/LoginModal';
 import SignupModal from '@/components/auth/SignupModal';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
-import { LogOut, History, Clock } from 'lucide-react';
+import { LogOut, History } from 'lucide-react';
 import { 
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import logoImage from '../assets/logo-mirunel.png';
 
 export default function Header() {
   const [, setLocation] = useLocation();
@@ -53,8 +54,11 @@ export default function Header() {
           className="flex items-center space-x-2 cursor-pointer" 
           onClick={() => setLocation('/')}
         >
-          <Clock className="h-6 w-6 text-accent" />
-          <h1 className="text-xl md:text-2xl font-playfair font-bold">MirrorTime</h1>
+          <img 
+            src={logoImage} 
+            alt="Mirunel Logo" 
+            className="h-8 md:h-10" 
+          />
         </div>
         
         {isLoggedIn && user ? (
