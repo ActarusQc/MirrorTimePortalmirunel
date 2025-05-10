@@ -83,6 +83,15 @@
     "deleteFailed": "Delete Failed",
     "deleteFailedDescription": "There was an error deleting this item. Please try again."
   },
+  "analysis": {
+    "button": "Analyse",
+    "analyzing": "Analysing...",
+    "title": "AI Spiritual Analysis",
+    "success": "Analysis Complete",
+    "successDetail": "Your personalized spiritual analysis has been generated.",
+    "error": "Analysis Failed",
+    "errorDetail": "There was an error generating your analysis. Please try again."
+  },
   "language": {
     "english": "English",
     "french": "French"

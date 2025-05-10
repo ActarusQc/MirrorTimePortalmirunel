@@ -83,6 +83,15 @@
     "deleteFailed": "Échec de la Suppression",
     "deleteFailedDescription": "Une erreur s'est produite lors de la suppression de cet élément. Veuillez réessayer."
   },
+  "analysis": {
+    "button": "Analyser",
+    "analyzing": "Analyse en cours...",
+    "title": "Analyse Spirituelle IA",
+    "success": "Analyse Terminée",
+    "successDetail": "Votre analyse spirituelle personnalisée a été générée.",
+    "error": "Échec de l'Analyse",
+    "errorDetail": "Une erreur s'est produite lors de la génération de votre analyse. Veuillez réessayer."
+  },
   "language": {
     "english": "Anglais",
     "french": "Français"

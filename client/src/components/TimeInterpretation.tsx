@@ -331,8 +331,27 @@ export default function TimeInterpretation({
                 </div>
               )}
               
-              {/* Action buttons side-by-side */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Action buttons */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* Analyze button */}
+                <Button 
+                  onClick={handleAnalyze} 
+                  className="w-full bg-[#C7CEB2] text-[#5C4E4E] py-3 hover:bg-[#B5C098] transition-colors font-medium shadow-md"
+                  disabled={isAnalyzing}
+                >
+                  {isAnalyzing ? (
+                    <span className="flex items-center justify-center">
+                      <RefreshCw className="h-5 w-5 mr-2 animate-spin" />
+                      {t('analysis.analyzing')}
+                    </span>
+                  ) : (
+                    <span className="flex items-center justify-center">
+                      <Sparkles className="h-5 w-5 mr-2 hover-scale" />
+                      {t('analysis.button')}
+                    </span>
+                  )}
+                </Button>
+
                 {/* Save button */}
                 {isLoggedIn ? (
                   <Button 
@@ -359,11 +378,11 @@ export default function TimeInterpretation({
                   </Button>
                 ) : (
                   <>
-                    <Button disabled className="w-full bg-[#9F84B5] text-white py-3 transition-colors opacity-70 mb-3 font-medium shadow-sm">
+                    <Button disabled className="w-full bg-[#9F84B5] text-white py-3 transition-colors opacity-70 font-medium shadow-sm">
                       <Bookmark className="h-5 w-5 mr-2" />
                       {t('interpretation.saveButton')}
                     </Button>
-                    <p className="text-center text-sm text-[#6A4F6B] font-medium">
+                    <p className="text-center text-sm text-[#6A4F6B] font-medium mt-1 mb-3">
                       <button onClick={onShowLogin} className="text-[#9F84B5] hover:text-[#8A6C9F] font-semibold hover:underline transition-colors">{t('auth.login')}</button> {t('common.or')}{' '}
                       <button onClick={onShowSignup} className="text-[#9F84B5] hover:text-[#8A6C9F] font-semibold hover:underline transition-colors">{t('auth.signup')}</button> {t('interpretation.toSave')}
                     </p>
@@ -373,6 +392,28 @@ export default function TimeInterpretation({
                 {/* Share interpretation component */}
                 <ShareInterpretation time={time} interpretation={interpretation} />
               </div>
+
+              {/* AI Analysis result */}
+              {(aiAnalysis || analysisError) && (
+                <div className="mt-6 fade-in-card">
+                  {analysisError ? (
+                    <Alert variant="destructive" className="bg-red-50 border-red-200">
+                      <AlertDescription className="text-red-700">
+                        {analysisError}
+                      </AlertDescription>
+                    </Alert>
+                  ) : (
+                    <div className="bg-[#EFE7DC] p-6 rounded-[12px] border border-[#D8C3A5]/30 shadow-md">
+                      <h4 className="font-marcellus text-[#7A5A9E] mb-3 font-semibold text-base">
+                        {t('analysis.title')}
+                      </h4>
+                      <p className="text-[#5C4E4E] text-[15.5px] leading-relaxed whitespace-pre-wrap">
+                        {aiAnalysis}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </CardFooter>
         </Tabs>
