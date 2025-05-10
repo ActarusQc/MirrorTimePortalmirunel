@@ -133,6 +133,8 @@
 .tab-active {
   border-bottom: 2px solid hsl(var(--accent));
   color: hsl(var(--primary));
+  background-color: rgba(179, 155, 200, 0.08);
+  transition: all 0.3s ease;
 }
 
 .fade-in {
