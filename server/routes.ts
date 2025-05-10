@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertHistoryItemSchema, insertUserSchema } from "@shared/schema";
 import { z } from "zod";
+import OpenAI from "openai";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // User routes
@@ -159,6 +160,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(204).send();
     } catch (error) {
       return res.status(500).json({ message: "Failed to delete history item" });
+    }
+  });
+
+  // OpenAI Analysis route
+  app.post("/api/analyze", async (req, res) => {
+    try {
+      const { time, message, language } = req.body;
+      
+      if (!time) {
+        return res.status(400).json({ message: "Time is required" });
+      }
+      
+      // Initialize OpenAI with API key
+      const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+      
+      // Determine language for the prompt (default to English)
+      const promptLanguage = language === 'fr' ? 'French' : 'English';
+      
+      // Create prompt based on language
+      const prompt = `Analyze the following mirror hour and message. Return a short spiritual interpretation in ${promptLanguage}:
+
+Time: ${time}
+Message: ${message || "No message provided"}
+
+Response:`;
+      
+      console.log("Sending request to OpenAI with prompt:", prompt);
+      
+      // Call OpenAI API
+      const completion = await openai.chat.completions.create({
+        model: "gpt-3.5-turbo",
+        messages: [
+          { role: "system", content: "You are a spiritual guide specializing in interpreting mirror hours and numerical synchronicities. Your analysis should be mystical, thoughtful, and personal." },
+          { role: "user", content: prompt }
+        ],
+        max_tokens: 300,
+        temperature: 0.8,
+      });
+      
+      // Extract response
+      const response = completion.choices[0].message.content?.trim();
+      
+      // Return the analysis
+      return res.json({ analysis: response });
+    } catch (error) {
+      console.error("Error analyzing with OpenAI:", error);
+      return res.status(500).json({ message: "Failed to analyze with OpenAI" });
     }
   });
 

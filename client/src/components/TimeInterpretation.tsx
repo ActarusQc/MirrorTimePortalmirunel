@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/hooks/useAuth';
-import { Bookmark, PencilIcon, SaveIcon } from 'lucide-react';
+import { Bookmark, PencilIcon, SaveIcon, Sparkles, RefreshCw } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
@@ -12,6 +12,7 @@ import { apiRequest } from '@/lib/queryClient';
 import ShareInterpretation from '@/components/ShareInterpretation';
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface TimeInterpretationProps {
   time: string;
@@ -32,6 +33,55 @@ export default function TimeInterpretation({
   const [thoughts, setThoughts] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [aiAnalysis, setAiAnalysis] = useState<string | null>(null);
+  const [analysisError, setAnalysisError] = useState<string | null>(null);
+  
+  const handleAnalyze = async () => {
+    setIsAnalyzing(true);
+    setAnalysisError(null);
+    
+    try {
+      // Get current language
+      const currentLanguage = localStorage.getItem('mirrorTime_language') || 'en';
+      
+      // Call the API
+      const response = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          time,
+          message: thoughts,
+          language: currentLanguage
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to analyze: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      setAiAnalysis(data.analysis);
+      
+      toast({
+        title: t('analysis.success'),
+        description: t('analysis.successDetail'),
+      });
+    } catch (error) {
+      console.error('Error analyzing with OpenAI:', error);
+      setAnalysisError(t('analysis.error'));
+      
+      toast({
+        title: t('analysis.error'),
+        description: t('analysis.errorDetail'),
+        variant: 'destructive',
+      });
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
   
   const handleSaveInterpretation = async () => {
     if (!isLoggedIn || !user) {
