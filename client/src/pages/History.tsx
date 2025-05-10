@@ -193,71 +193,72 @@ export default function History() {
             </CardContent>
           </Card>
         ) : historyItems.length === 0 ? (
-          <Card className="text-center py-10">
+          <Card className="text-center py-12 bg-white/70 border-[#D8C3A5]/30 rounded-[12px] shadow-card fade-in-card">
             <CardContent className="flex flex-col items-center">
-              <Clock className="h-12 w-12 text-gray-300 mb-3" />
-              <p className="text-mediumgray">{t('history.noItems')}</p>
+              <Clock className="h-12 w-12 text-[#D8C3A5]/50 mb-4" />
+              <p className="text-[#B39BC8]/70 font-light">{t('history.noItems')}</p>
+              <p className="text-[#D8C3A5]/70 text-sm mt-2 max-w-md">{t('history.emptyDescription', 'Explore mirror hours and save them to build your history.')}</p>
             </CardContent>
           </Card>
         ) : (
           <ScrollArea className="max-h-[70vh]">
             {historyItems.map((item) => (
-              <Card key={item.id} className="mb-6">
+              <Card key={item.id} className="mb-6 border-[#D8C3A5]/30 rounded-[12px] bg-white/90 shadow-card fade-in-card">
                 <CardContent className="p-6">
-                  <div className="flex justify-between items-center mb-3">
+                  <div className="flex justify-between items-center mb-4">
                     <div>
-                      <span className="text-xl font-playfair font-bold text-primary">{item.time}</span>
-                      <span className="text-sm text-mediumgray ml-2">{item.type}</span>
+                      <span className="text-xl font-marcellus font-bold text-[#B39BC8]">{item.time}</span>
+                      <span className="text-sm font-light text-[#D8C3A5] ml-2 italic">{item.type}</span>
                     </div>
                     <div className="flex items-center">
-                      <span className="text-sm text-mediumgray mr-3">{formatDate(item.savedAt)}</span>
+                      <span className="text-sm font-light text-[#D8C3A5] mr-3">{formatDate(item.savedAt)}</span>
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="text-gray-400 hover:text-destructive"
+                        className="text-[#F5B7B1]/70 hover:text-[#F5B7B1] hover:bg-[#F5B7B1]/10 transition-all"
                         onClick={() => handleDeleteItem(item.id)}
                       >
-                        <Trash2 className="h-4 w-4" />
+                        <Trash2 className="h-4 w-4 hover-scale" />
                       </Button>
                     </div>
                   </div>
                   
                   <Tabs defaultValue="spiritual">
-                    <TabsList className={`grid w-full ${item.thoughts ? 'grid-cols-4' : 'grid-cols-3'}`}>
-                      <TabsTrigger value="spiritual">{t('interpretation.spiritualTab')}</TabsTrigger>
-                      <TabsTrigger value="angel">{t('interpretation.angelTab')}</TabsTrigger>
-                      <TabsTrigger value="numerology">{t('interpretation.numerologyTab')}</TabsTrigger>
+                    <TabsList className={`grid w-full ${item.thoughts ? 'grid-cols-4' : 'grid-cols-3'} bg-[#FDF8F4]/80 border-[#D8C3A5]/20`}>
+                      <TabsTrigger value="spiritual" className="data-[state=active]:bg-white data-[state=active]:text-[#B39BC8] data-[state=active]:shadow-sm">{t('interpretation.spiritualTab')}</TabsTrigger>
+                      <TabsTrigger value="angel" className="data-[state=active]:bg-white data-[state=active]:text-[#B39BC8] data-[state=active]:shadow-sm">{t('interpretation.angelTab')}</TabsTrigger>
+                      <TabsTrigger value="numerology" className="data-[state=active]:bg-white data-[state=active]:text-[#B39BC8] data-[state=active]:shadow-sm">{t('interpretation.numerologyTab')}</TabsTrigger>
                       {item.thoughts && (
-                        <TabsTrigger value="thoughts">{t('thoughts.myThoughts')}</TabsTrigger>
+                        <TabsTrigger value="thoughts" className="data-[state=active]:bg-white data-[state=active]:text-[#B39BC8] data-[state=active]:shadow-sm">{t('thoughts.myThoughts')}</TabsTrigger>
                       )}
                     </TabsList>
                     
                     <TabsContent value="spiritual" className="mt-4">
-                      <div className="bg-gray-50 p-3 rounded-lg">
-                        <h4 className="font-medium text-primary mb-1">{item.details.spiritual.title}</h4>
-                        <p className="text-mediumgray text-sm">{item.details.spiritual.description}</p>
+                      <div className="bg-[#FDF8F4]/70 p-4 rounded-[12px] border border-[#D8C3A5]/20 shadow-sm">
+                        <h4 className="font-marcellus text-[#B39BC8] mb-2">{item.details.spiritual.title}</h4>
+                        <p className="text-[#D8C3A5] text-sm font-light leading-relaxed">{item.details.spiritual.description}</p>
                       </div>
                     </TabsContent>
                     
                     <TabsContent value="angel" className="mt-4">
-                      <div className="bg-gray-50 p-3 rounded-lg">
-                        <h4 className="font-medium text-primary mb-1">{item.details.angel.name}</h4>
-                        <p className="text-mediumgray text-sm">{item.details.angel.message}</p>
+                      <div className="bg-[#FDF8F4]/70 p-4 rounded-[12px] border border-[#D8C3A5]/20 shadow-sm">
+                        <h4 className="font-marcellus text-[#B39BC8] mb-2">{item.details.angel.name}</h4>
+                        <p className="text-[#D8C3A5] text-sm font-light leading-relaxed">{item.details.angel.message}</p>
                       </div>
                     </TabsContent>
                     
                     <TabsContent value="numerology" className="mt-4">
-                      <div className="bg-gray-50 p-3 rounded-lg">
-                        <h4 className="font-medium text-primary mb-1">{item.details.numerology.title}</h4>
-                        <p className="text-mediumgray text-sm">{item.details.numerology.analysis}</p>
+                      <div className="bg-[#FDF8F4]/70 p-4 rounded-[12px] border border-[#D8C3A5]/20 shadow-sm">
+                        <h4 className="font-marcellus text-[#B39BC8] mb-2">{item.details.numerology.title}</h4>
+                        <p className="text-[#D8C3A5] text-sm font-light leading-relaxed">{item.details.numerology.analysis}</p>
                       </div>
                     </TabsContent>
                     
                     {item.thoughts && (
                       <TabsContent value="thoughts" className="mt-4">
-                        <div className="bg-gray-50 p-3 rounded-lg">
-                          <h4 className="font-medium text-primary mb-1">{t('thoughts.experience')}</h4>
-                          <p className="text-mediumgray text-sm">{item.thoughts}</p>
+                        <div className="bg-[#FDF8F4]/70 p-4 rounded-[12px] border border-[#D8C3A5]/20 shadow-sm">
+                          <h4 className="font-marcellus text-[#B39BC8] mb-2">{t('thoughts.experience')}</h4>
+                          <p className="text-[#D8C3A5] text-sm font-light leading-relaxed italic">{item.thoughts}</p>
                         </div>
                       </TabsContent>
                     )}
@@ -270,16 +271,23 @@ export default function History() {
       </div>
       
       <AlertDialog open={itemToDelete !== null} onOpenChange={(open) => !open && setItemToDelete(null)}>
-        <AlertDialogContent>
+        <AlertDialogContent className="border-[#D8C3A5]/30 bg-white/95 shadow-card rounded-[12px]">
           <AlertDialogHeader>
-            <AlertDialogTitle>{t('history.deleteTitle')}</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="font-marcellus text-[#B39BC8] text-xl">{t('history.deleteTitle')}</AlertDialogTitle>
+            <AlertDialogDescription className="text-[#D8C3A5]">
               {t('history.deleteConfirmation')}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmDelete}>{t('common.delete')}</AlertDialogAction>
+            <AlertDialogCancel className="border-[#D8C3A5]/50 text-[#D8C3A5] hover:bg-[#FDF8F4] hover:text-[#B39BC8] transition-all">
+              {t('common.cancel')}
+            </AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={confirmDelete}
+              className="bg-[#F5B7B1] hover:bg-[#F5B7B1]/80 text-white transition-all"
+            >
+              {t('common.delete')}
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
