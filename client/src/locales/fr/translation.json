@@ -144,7 +144,8 @@
     "saved": {
       "title": "Pensées Enregistrées",
       "description": "Vos pensées ont été enregistrées avec succès.",
-      "button": "Enregistré"
+      "button": "Enregistré",
+      "alreadySaved": "Ces pensées ont déjà été enregistrées avec cette heure."
     },
     "empty": {
       "title": "Pensées Vides",

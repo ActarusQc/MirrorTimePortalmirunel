@@ -144,7 +144,8 @@
     "saved": {
       "title": "Thoughts Saved",
       "description": "Your thoughts have been saved successfully.",
-      "button": "Saved"
+      "button": "Saved",
+      "alreadySaved": "These thoughts were already saved with this time."
     },
     "empty": {
       "title": "Empty Thoughts",
