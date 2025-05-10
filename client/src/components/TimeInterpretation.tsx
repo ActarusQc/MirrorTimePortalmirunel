@@ -287,35 +287,35 @@ export default function TimeInterpretation({
                 {isLoggedIn ? (
                   <Button 
                     onClick={handleSaveInterpretation} 
-                    className="w-full bg-primary text-white py-6 hover:bg-primary/90 transition-colors"
+                    className="w-full bg-[#9F84B5] text-white py-3 hover:bg-[#8A6C9F] transition-colors font-medium shadow-md"
                     disabled={isSaving || isSaved}
                   >
                     {isSaving ? (
                       <span className="flex items-center justify-center">
-                        <span className="animate-spin mr-2">⧖</span>
+                        <span className="animate-spin mr-2 text-lg">⧖</span>
                         {t('thoughts.saving')}
                       </span>
                     ) : isSaved ? (
                       <span className="flex items-center justify-center">
-                        <SaveIcon className="h-4 w-4 mr-2" />
+                        <SaveIcon className="h-5 w-5 mr-2 hover-scale" />
                         {t('thoughts.saved.button')}
                       </span>
                     ) : (
                       <span className="flex items-center justify-center">
-                        <Bookmark className="h-4 w-4 mr-2" />
+                        <Bookmark className="h-5 w-5 mr-2 hover-scale" />
                         {t('interpretation.saveButton')}
                       </span>
                     )}
                   </Button>
                 ) : (
                   <>
-                    <Button disabled className="w-full bg-primary text-white py-6 transition-colors opacity-70 mb-2">
-                      <Bookmark className="h-4 w-4 mr-2" />
+                    <Button disabled className="w-full bg-[#9F84B5] text-white py-3 transition-colors opacity-70 mb-3 font-medium shadow-sm">
+                      <Bookmark className="h-5 w-5 mr-2" />
                       {t('interpretation.saveButton')}
                     </Button>
-                    <p className="text-center text-sm text-mediumgray">
-                      <button onClick={onShowLogin} className="text-primary hover:underline">{t('auth.login')}</button> {t('common.or')}{' '}
-                      <button onClick={onShowSignup} className="text-primary hover:underline">{t('auth.signup')}</button> {t('interpretation.toSave')}
+                    <p className="text-center text-sm text-[#6A4F6B] font-medium">
+                      <button onClick={onShowLogin} className="text-[#9F84B5] hover:text-[#8A6C9F] font-semibold hover:underline transition-colors">{t('auth.login')}</button> {t('common.or')}{' '}
+                      <button onClick={onShowSignup} className="text-[#9F84B5] hover:text-[#8A6C9F] font-semibold hover:underline transition-colors">{t('auth.signup')}</button> {t('interpretation.toSave')}
                     </p>
                   </>
                 )}
