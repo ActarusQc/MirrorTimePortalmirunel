@@ -179,12 +179,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const promptLanguage = language === 'fr' ? 'French' : 'English';
       
       // Create prompt based on language
-      const prompt = `Analyze the following mirror hour and message. Return a short spiritual interpretation in ${promptLanguage}:
+      let prompt;
+      if (language === 'fr') {
+        prompt = `Analysez l'heure miroir et le message suivants. Retournez une interprétation spirituelle concise et directe, sans commencer par "Interprétation en français:" :
+
+Heure: ${time}
+Message: ${message || "Pas de message fourni"}
+
+Réponse:`;
+      } else {
+        prompt = `Analyze the following mirror hour and message. Return a short spiritual interpretation:
 
 Time: ${time}
 Message: ${message || "No message provided"}
 
 Response:`;
+      }
       
       console.log("Sending request to OpenAI with prompt:", prompt);
       
