@@ -90,7 +90,9 @@
     "success": "Analysis Complete",
     "successDetail": "Your personalized spiritual analysis has been generated.",
     "error": "Analysis Failed",
-    "errorDetail": "There was an error generating your analysis. Please try again."
+    "errorDetail": "There was an error generating your analysis. Please try again.",
+    "savedToHistory": "Analysis Saved",
+    "savedToHistoryDetail": "The analysis has been saved to your history."
   },
   "language": {
     "english": "English",

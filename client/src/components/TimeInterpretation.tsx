@@ -69,6 +69,54 @@ export default function TimeInterpretation({
         title: t('analysis.success'),
         description: t('analysis.successDetail'),
       });
+      
+      // If logged in, save the analysis to history
+      if (isLoggedIn && user) {
+        try {
+          // Create a special version of details for AI-generated analysis
+          const aiDetails = {
+            spiritual: {
+              title: t('analysis.title'),
+              description: data.analysis,
+              guidance: ''
+            },
+            angel: {
+              name: '',
+              message: '',
+              guidance: ''
+            },
+            numerology: {
+              title: '',
+              rootNumber: '',
+              mirrorEffect: '',
+              analysis: ''
+            },
+            isAiGenerated: true
+          };
+          
+          // Save to API
+          await apiRequest('POST', '/api/history', {
+            userId: user.id,
+            time,
+            type: interpretation.type,
+            thoughts: thoughts.trim() ? thoughts : undefined,
+            details: aiDetails
+          });
+          
+          // Show success message
+          toast({
+            title: t('analysis.savedToHistory'),
+            description: t('analysis.savedToHistoryDetail'),
+          });
+        } catch (saveError) {
+          console.error('Error saving analysis to history:', saveError);
+          toast({
+            title: t('errors.saveFailed'),
+            description: t('errors.saveFailedDescription'),
+            variant: 'destructive',
+          });
+        }
+      }
     } catch (error) {
       console.error('Error analyzing with OpenAI:', error);
       setAnalysisError(t('analysis.error'));
