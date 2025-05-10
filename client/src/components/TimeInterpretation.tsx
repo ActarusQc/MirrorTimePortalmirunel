@@ -120,7 +120,7 @@ export default function TimeInterpretation({
       transition={{ duration: 0.4, delay: 0.2 }}
       className="max-w-4xl mx-auto"
     >
-      <Card className="overflow-hidden shadow-md">
+      <Card className="overflow-hidden shadow-card rounded-[12px] fade-in-card">
         <Tabs defaultValue="spiritual">
           <TabsList className="flex w-full border-b border-gray-200 bg-transparent p-0 rounded-none">
             <TabsTrigger 

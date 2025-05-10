@@ -4,33 +4,36 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
+    /* Aura Intemporelle color palette */
+    --background: 39 67% 97%;    /* #FDF8F4 - Creamy white */
     --foreground: 20 14.3% 4.1%;
-    --muted: 60 4.8% 95.9%;
+    --muted: 82 25% 74%;         /* #C7CEB2 - Soft sage */
     --muted-foreground: 25 5.3% 44.7%;
-    --popover: 0 0% 100%;
+    --popover: 39 67% 97%;       /* #FDF8F4 - Creamy white */
     --popover-foreground: 20 14.3% 4.1%;
-    --card: 0 0% 100%;
+    --card: 0 0% 100%;           /* White */
     --card-foreground: 20 14.3% 4.1%;
-    --border: 20 5.9% 90%;
-    --input: 20 5.9% 90%;
-    --primary: 263 58% 67%;     /* #7B68EE */
+    --border: 34 39% 75%;        /* #D8C3A5 - Warm beige */
+    --input: 34 39% 75%;         /* #D8C3A5 - Warm beige */
+    --primary: 280 30% 70%;      /* #B39BC8 - Soft lavender */
     --primary-foreground: 0 0% 100%;
-    --secondary: 262 62% 65%;   /* #9370DB */
+    --secondary: 280 30% 62%;    /* #9F84B5 - Darker lavender for hover */
     --secondary-foreground: 0 0% 100%;
-    --accent: 51 100% 50%;      /* #FFD700 */
+    --accent: 352 73% 83%;       /* #F5B7B1 - Powder pink */
     --accent-foreground: 24 9.8% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 60 9.1% 97.8%;
-    --ring: 263 58% 67%;
-    --radius: 0.5rem;
+    --ring: 280 30% 70%;         /* #B39BC8 - Soft lavender */
+    --radius: 0.75rem;           /* Increased border radius to 12px */
     
     /* Custom colors */
-    --dark: 0 0% 20%;           /* #333333 */
-    --light: 0 0% 98%;          /* #FAFAFA */
-    --mediumgray: 0 0% 29%;     /* #4A4A4A */
-    --success: 122 39% 49%;     /* #4CAF50 */
-    --error: 0 74% 58%;         /* #F44336 */
+    --dark: 0 0% 20%;            /* #333333 */
+    --light: 39 67% 97%;         /* #FDF8F4 - Creamy white */
+    --mediumgray: 0 0% 29%;      /* #4A4A4A */
+    --success: 122 39% 49%;      /* #4CAF50 */
+    --error: 0 74% 58%;          /* #F44336 */
+    --warm-beige: 34 39% 75%;    /* #D8C3A5 - Warm beige */
+    --soft-sage: 82 25% 74%;     /* #C7CEB2 - Soft sage */
   }
 
   .dark {
@@ -67,12 +70,64 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Marcellus', serif;
+  }
+  
+  /* Add uniform box shadow to cards */
+  .card, .shadow-card {
+    box-shadow: 0 4px 20px rgba(179, 155, 200, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  /* Hover effects for interactive elements */
+  .hover-scale {
+    transition: transform 0.2s ease;
+  }
+  
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Entry animations */
+  .fade-in-card {
+    animation: fadeInUp 0.5s ease-out forwards;
+    opacity: 0;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Form inputs styling */
+  input, textarea, select, .form-input {
+    border-radius: var(--radius);
+    transition: all 0.2s ease;
+    border: 1px solid hsl(var(--border));
+  }
+  
+  input:focus, textarea:focus, select:focus, .form-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(179, 155, 200, 0.25);
+    border-color: hsl(var(--primary));
+  }
+  
+  /* Make buttons more elegant */
+  button, .btn {
+    border-radius: var(--radius);
+    transition: all 0.2s ease;
   }
 }
 
 .gradient-bg {
   background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
+  box-shadow: 0 2px 15px rgba(179, 155, 200, 0.2);
 }
 
 .tab-active {
