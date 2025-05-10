@@ -254,45 +254,9 @@ export default function TimeInterpretation({
 
           <CardFooter className="px-6 pb-6 pt-0 flex flex-col">
             <div className="flex flex-col space-y-4 w-full">
-              {isLoggedIn ? (
-                <Button 
-                  onClick={handleSaveInterpretation} 
-                  className="w-full bg-primary text-white py-6 hover:bg-secondary transition-colors"
-                  disabled={isSaving || isSaved}
-                >
-                  {isSaving ? (
-                    <span className="flex items-center">
-                      <span className="animate-spin mr-2">⧖</span>
-                      {t('thoughts.saving')}
-                    </span>
-                  ) : isSaved ? (
-                    <span className="flex items-center">
-                      <SaveIcon className="h-4 w-4 mr-2" />
-                      {t('thoughts.saved.button')}
-                    </span>
-                  ) : (
-                    <span className="flex items-center">
-                      <Bookmark className="h-4 w-4 mr-2" />
-                      {t('interpretation.saveButton')}
-                    </span>
-                  )}
-                </Button>
-              ) : (
-                <>
-                  <Button disabled className="w-full bg-primary text-white py-6 transition-colors opacity-70 mb-2">
-                    <Bookmark className="h-4 w-4 mr-2" />
-                    {t('interpretation.saveButton')}
-                  </Button>
-                  <p className="text-center text-sm text-mediumgray">
-                    <button onClick={onShowLogin} className="text-primary hover:underline">{t('auth.login')}</button> {t('common.or')}{' '}
-                    <button onClick={onShowSignup} className="text-primary hover:underline">{t('auth.signup')}</button> {t('interpretation.toSave')}
-                  </p>
-                </>
-              )}
-              
-              {/* Thoughts input */}
+              {/* Thoughts input - moved to the top */}
               {isLoggedIn && (
-                <div className="mt-4 border rounded-md p-4 bg-card">
+                <div className="border rounded-md p-4 bg-card">
                   <div className="space-y-2">
                     <Label htmlFor="thoughts">
                       <div className="flex items-center">
@@ -312,8 +276,52 @@ export default function TimeInterpretation({
                 </div>
               )}
               
-              {/* Share interpretation component */}
-              <ShareInterpretation time={time} interpretation={interpretation} />
+              {/* Action buttons side-by-side */}
+              <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+                {/* Save button */}
+                <div className="flex-1">
+                  {isLoggedIn ? (
+                    <Button 
+                      onClick={handleSaveInterpretation} 
+                      className="w-full bg-primary text-white py-6 hover:bg-secondary transition-colors"
+                      disabled={isSaving || isSaved}
+                    >
+                      {isSaving ? (
+                        <span className="flex items-center">
+                          <span className="animate-spin mr-2">⧖</span>
+                          {t('thoughts.saving')}
+                        </span>
+                      ) : isSaved ? (
+                        <span className="flex items-center">
+                          <SaveIcon className="h-4 w-4 mr-2" />
+                          {t('thoughts.saved.button')}
+                        </span>
+                      ) : (
+                        <span className="flex items-center">
+                          <Bookmark className="h-4 w-4 mr-2" />
+                          {t('interpretation.saveButton')}
+                        </span>
+                      )}
+                    </Button>
+                  ) : (
+                    <>
+                      <Button disabled className="w-full bg-primary text-white py-6 transition-colors opacity-70 mb-2">
+                        <Bookmark className="h-4 w-4 mr-2" />
+                        {t('interpretation.saveButton')}
+                      </Button>
+                      <p className="text-center text-sm text-mediumgray">
+                        <button onClick={onShowLogin} className="text-primary hover:underline">{t('auth.login')}</button> {t('common.or')}{' '}
+                        <button onClick={onShowSignup} className="text-primary hover:underline">{t('auth.signup')}</button> {t('interpretation.toSave')}
+                      </p>
+                    </>
+                  )}
+                </div>
+                
+                {/* Share interpretation component - side by side with save button */}
+                <div className="flex-1">
+                  <ShareInterpretation time={time} interpretation={interpretation} />
+                </div>
+              </div>
             </div>
           </CardFooter>
         </Tabs>
