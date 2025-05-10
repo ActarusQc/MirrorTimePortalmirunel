@@ -86,14 +86,14 @@ export default function ThoughtsRecorder({ time, timeType, onSaved }: ThoughtsRe
   }
 
   return (
-    <div className="mt-6 border rounded-md p-4 bg-card">
+    <div className="mt-6 border border-[#D8C3A5]/30 rounded-[12px] p-5 bg-white shadow-card fade-in-card">
       <Tabs defaultValue="record">
         <TabsList className="grid w-full grid-cols-1">
           <TabsTrigger value="record">
             {isSaved ? (
-              <CheckIcon className="h-4 w-4 mr-2" />
+              <CheckIcon className="h-4 w-4 mr-2 hover-scale text-[#B39BC8]" />
             ) : (
-              <PencilIcon className="h-4 w-4 mr-2" />
+              <PencilIcon className="h-4 w-4 mr-2 hover-scale text-[#B39BC8]" />
             )}
             {t('thoughts.tabTitle')}
           </TabsTrigger>
@@ -101,13 +101,13 @@ export default function ThoughtsRecorder({ time, timeType, onSaved }: ThoughtsRe
         
         <TabsContent value="record" className="space-y-4 pt-4">
           <div className="space-y-2">
-            <Label htmlFor="thoughts">{t('thoughts.prompt')}</Label>
+            <Label htmlFor="thoughts" className="text-primary font-medium tracking-wide">{t('thoughts.prompt')}</Label>
             <Textarea
               id="thoughts"
               placeholder={t('thoughts.placeholder')}
               value={thoughts}
               onChange={(e) => setThoughts(e.target.value)}
-              className="min-h-[100px]"
+              className="min-h-[120px] border-[#D8C3A5]/50 rounded-[12px] focus:border-primary focus:ring-primary/20 bg-[#FDF8F4]/50 transition-all duration-300"
               disabled={isSaving || isSaved}
             />
           </div>
@@ -124,12 +124,12 @@ export default function ThoughtsRecorder({ time, timeType, onSaved }: ThoughtsRe
               </span>
             ) : isSaved ? (
               <span className="flex items-center">
-                <CheckIcon className="h-4 w-4 mr-2" />
+                <CheckIcon className="h-4 w-4 mr-2 hover-scale text-[#B39BC8]" />
                 {t('thoughts.saved.button')}
               </span>
             ) : (
               <span className="flex items-center">
-                <SaveIcon className="h-4 w-4 mr-2" />
+                <SaveIcon className="h-4 w-4 mr-2 hover-scale text-[#B39BC8]" />
                 {t('thoughts.saveButton')}
               </span>
             )}
