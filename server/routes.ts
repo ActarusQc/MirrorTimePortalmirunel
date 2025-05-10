@@ -48,6 +48,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // History routes
   app.post("/api/history", async (req, res) => {
+    let savedItem: any;
     try {
       console.log("Received request to save history item");
       
@@ -109,7 +110,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.log("Validation successful, validated data:", JSON.stringify(validatedData, null, 2));
         
         // Save to database
-        const savedItem = await storage.createHistoryItem(validatedData);
+        savedItem = await storage.createHistoryItem(validatedData);
         console.log("Item saved to database:", JSON.stringify(savedItem, null, 2));
       } catch (validationError) {
         console.error("Schema validation error:", validationError);

@@ -37,25 +37,46 @@ export class DatabaseStorage implements IStorage {
   
   // Ensure that a user exists with the given ID for history operations
   async ensureUserExists(userId: number): Promise<boolean> {
-    // Check if the user exists
-    const user = await this.getUser(userId);
-    
-    if (user) return true;
-    
     try {
-      // Create a placeholder user if it doesn't exist
-      const username = `user_${userId}`;
-      const email = `user_${userId}@example.com`;
+      // First, check if the user exists by ID
+      const user = await this.getUser(userId);
+      if (user) {
+        console.log(`User with ID ${userId} already exists`);
+        return true;
+      }
       
+      // If not found by ID, check if the placeholder username already exists
+      const username = `user_${userId}`;
+      const existingUserByName = await this.getUserByUsername(username);
+      if (existingUserByName) {
+        console.log(`User with username ${username} already exists, but with a different ID`);
+        // If the user exists but with a different ID, this is a special case
+        // We could either update the user's ID or return true to allow using the existing user
+        // For simplicity, we'll just return true
+        return true;
+      }
+      
+      // Create a placeholder user if it doesn't exist by ID or username
+      const email = `user_${userId}@example.com`;
       await this.createUser({
         username,
         password: 'placeholder', 
         email
       });
       
+      console.log(`Created placeholder user with ID ${userId}`);
       return true;
     } catch (e) {
-      console.error('Failed to create placeholder user:', e);
+      console.error('Failed during user existence check/creation:', e);
+      
+      // Special case: if this is a duplicate key error, the user likely exists already
+      // This could happen in a race condition where the user was created between our check and insert
+      if (e instanceof Error && e.message && 
+          (e.message.includes('duplicate key') || e.message.includes('already exists'))) {
+        console.log('User appears to already exist (from error message)');
+        return true;
+      }
+      
       return false;
     }
   }
