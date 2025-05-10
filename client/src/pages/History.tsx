@@ -234,31 +234,31 @@ export default function History() {
                     </TabsList>
                     
                     <TabsContent value="spiritual" className="mt-4">
-                      <div className="bg-[#FDF8F4]/70 p-4 rounded-[12px] border border-[#D8C3A5]/20 shadow-sm">
-                        <h4 className="font-marcellus text-[#B39BC8] mb-2">{item.details.spiritual.title}</h4>
-                        <p className="text-[#D8C3A5] text-sm font-light leading-relaxed">{item.details.spiritual.description}</p>
+                      <div className="bg-[#EFE7DC] p-6 rounded-[12px] border border-[#D8C3A5]/30 shadow-md">
+                        <h4 className="font-marcellus text-[#7A5A9E] mb-3 font-semibold text-base">{item.details.spiritual.title}</h4>
+                        <p className="text-[#5C4E4E] text-[15.5px] leading-relaxed">{item.details.spiritual.description}</p>
                       </div>
                     </TabsContent>
                     
                     <TabsContent value="angel" className="mt-4">
-                      <div className="bg-[#FDF8F4]/70 p-4 rounded-[12px] border border-[#D8C3A5]/20 shadow-sm">
-                        <h4 className="font-marcellus text-[#B39BC8] mb-2">{item.details.angel.name}</h4>
-                        <p className="text-[#D8C3A5] text-sm font-light leading-relaxed">{item.details.angel.message}</p>
+                      <div className="bg-[#EFE7DC] p-6 rounded-[12px] border border-[#D8C3A5]/30 shadow-md">
+                        <h4 className="font-marcellus text-[#7A5A9E] mb-3 font-semibold text-base">{item.details.angel.name}</h4>
+                        <p className="text-[#5C4E4E] text-[15.5px] leading-relaxed">{item.details.angel.message}</p>
                       </div>
                     </TabsContent>
                     
                     <TabsContent value="numerology" className="mt-4">
-                      <div className="bg-[#FDF8F4]/70 p-4 rounded-[12px] border border-[#D8C3A5]/20 shadow-sm">
-                        <h4 className="font-marcellus text-[#B39BC8] mb-2">{item.details.numerology.title}</h4>
-                        <p className="text-[#D8C3A5] text-sm font-light leading-relaxed">{item.details.numerology.analysis}</p>
+                      <div className="bg-[#EFE7DC] p-6 rounded-[12px] border border-[#D8C3A5]/30 shadow-md">
+                        <h4 className="font-marcellus text-[#7A5A9E] mb-3 font-semibold text-base">{item.details.numerology.title}</h4>
+                        <p className="text-[#5C4E4E] text-[15.5px] leading-relaxed">{item.details.numerology.analysis}</p>
                       </div>
                     </TabsContent>
                     
                     {item.thoughts && (
                       <TabsContent value="thoughts" className="mt-4">
-                        <div className="bg-[#FDF8F4]/70 p-4 rounded-[12px] border border-[#D8C3A5]/20 shadow-sm">
-                          <h4 className="font-marcellus text-[#B39BC8] mb-2">{t('thoughts.experience')}</h4>
-                          <p className="text-[#D8C3A5] text-sm font-light leading-relaxed italic">{item.thoughts}</p>
+                        <div className="bg-[#EFE7DC] p-6 rounded-[12px] border border-[#D8C3A5]/30 shadow-md">
+                          <h4 className="font-marcellus text-[#7A5A9E] mb-3 font-semibold text-base">{t('thoughts.experience')}</h4>
+                          <p className="text-[#5C4E4E] text-[15.5px] leading-relaxed italic">{item.thoughts}</p>
                         </div>
                       </TabsContent>
                     )}
