@@ -35,6 +35,31 @@ export class DatabaseStorage implements IStorage {
     return user;
   }
   
+  // Ensure that a user exists with the given ID for history operations
+  async ensureUserExists(userId: number): Promise<boolean> {
+    // Check if the user exists
+    const user = await this.getUser(userId);
+    
+    if (user) return true;
+    
+    try {
+      // Create a placeholder user if it doesn't exist
+      const username = `user_${userId}`;
+      const email = `user_${userId}@example.com`;
+      
+      await this.createUser({
+        username,
+        password: 'placeholder', 
+        email
+      });
+      
+      return true;
+    } catch (e) {
+      console.error('Failed to create placeholder user:', e);
+      return false;
+    }
+  }
+  
   async createHistoryItem(insertItem: InsertHistoryItem): Promise<HistoryItem> {
     const [historyItem] = await db
       .insert(historyItems)

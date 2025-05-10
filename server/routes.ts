@@ -67,8 +67,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         hasDetails: details ? "yes" : "no" 
       });
       
+      // First, ensure that the user exists in the database
+      const userExists = await storage.ensureUserExists(userId);
+      if (!userExists) {
+        console.error("Failed to ensure user exists");
+        return res.status(400).json({ message: "Failed to validate user" });
+      }
+      
       // Prepare the data for database insertion
-      let historyData = {
+      let historyData: any = {
         userId,
         time,
         type
@@ -76,7 +83,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Add thoughts if provided
       if (thoughts && thoughts.trim()) {
-        historyData = { ...historyData, thoughts };
+        historyData.thoughts = thoughts;
       }
       
       // Convert details to string if provided (limit size to avoid DB issues)
@@ -86,10 +93,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             ? details 
             : JSON.stringify(details);
             
-          historyData = { 
-            ...historyData, 
-            details: detailsStr.substring(0, 5000) 
-          };
+          historyData.details = detailsStr.substring(0, 5000);
         } catch (e) {
           console.error("Error stringifying details:", e);
         }
