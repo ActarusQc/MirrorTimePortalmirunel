@@ -110,15 +110,15 @@ export default function TimeInterpretation({
               guidance: ''
             },
             angel: {
-              name: '',
-              message: '',
+              name: t('interpretation.angelTab'),
+              message: t('history.noContentForTab'),
               guidance: ''
             },
             numerology: {
-              title: '',
+              title: t('interpretation.numerologyTab'),
               rootNumber: '',
               mirrorEffect: '',
-              analysis: ''
+              analysis: t('history.noContentForTab')
             },
             isAiGenerated: true
           };
