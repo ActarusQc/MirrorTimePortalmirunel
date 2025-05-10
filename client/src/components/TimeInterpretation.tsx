@@ -85,11 +85,28 @@ export default function TimeInterpretation({
     } catch (error) {
       console.error('Error saving to history:', error);
       
+      // Try to extract more detailed error message if available
+      let errorMessage = t('errors.saveFailedDescription');
+      if (error instanceof Error) {
+        console.error('Detailed error:', error.message);
+        errorMessage = error.message;
+      } else if (error instanceof Response) {
+        console.error('Response error status:', error.status);
+        try {
+          // Try to extract JSON error if available
+          const errorData = await error.json();
+          console.error('Response error data:', errorData);
+          errorMessage = errorData.message || errorMessage;
+        } catch (e) {
+          console.error('Could not parse error response as JSON');
+        }
+      }
+      
       toast({
         title: t('errors.saveFailed'),
-        description: t('errors.saveFailedDescription'),
+        description: errorMessage,
         variant: 'destructive',
-        duration: 3000,
+        duration: 5000,
       });
     } finally {
       setIsSaving(false);
