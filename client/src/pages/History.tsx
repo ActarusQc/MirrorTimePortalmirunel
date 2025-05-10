@@ -251,15 +251,35 @@ export default function History() {
                     
                     <TabsContent value="angel" className="mt-4">
                       <div className="bg-[#EFE7DC] p-6 rounded-[12px] border border-[#D8C3A5]/30 shadow-md">
-                        <h4 className="font-marcellus text-[#7A5A9E] mb-3 font-semibold text-base">{item.details.angel.name || t('interpretation.angelTab')}</h4>
-                        <p className="text-[#5C4E4E] text-[15.5px] leading-relaxed">{item.details.angel.message || t('history.noContentForTab')}</p>
+                        {/* For AI-generated content, show "No content" message since these fields are empty */}
+                        {item.details.isAiGenerated ? (
+                          <>
+                            <h4 className="font-marcellus text-[#7A5A9E] mb-3 font-semibold text-base">{t('interpretation.angelTab')}</h4>
+                            <p className="text-[#5C4E4E] text-[15.5px] leading-relaxed">{t('history.noContentForTab')}</p>
+                          </>
+                        ) : (
+                          <>
+                            <h4 className="font-marcellus text-[#7A5A9E] mb-3 font-semibold text-base">{item.details.angel.name || t('interpretation.angelTab')}</h4>
+                            <p className="text-[#5C4E4E] text-[15.5px] leading-relaxed">{item.details.angel.message || t('history.noContentForTab')}</p>
+                          </>
+                        )}
                       </div>
                     </TabsContent>
                     
                     <TabsContent value="numerology" className="mt-4">
                       <div className="bg-[#EFE7DC] p-6 rounded-[12px] border border-[#D8C3A5]/30 shadow-md">
-                        <h4 className="font-marcellus text-[#7A5A9E] mb-3 font-semibold text-base">{item.details.numerology.title || t('interpretation.numerologyTab')}</h4>
-                        <p className="text-[#5C4E4E] text-[15.5px] leading-relaxed">{item.details.numerology.analysis || t('history.noContentForTab')}</p>
+                        {/* For AI-generated content, show "No content" message since these fields are empty */}
+                        {item.details.isAiGenerated ? (
+                          <>
+                            <h4 className="font-marcellus text-[#7A5A9E] mb-3 font-semibold text-base">{t('interpretation.numerologyTab')}</h4>
+                            <p className="text-[#5C4E4E] text-[15.5px] leading-relaxed">{t('history.noContentForTab')}</p>
+                          </>
+                        ) : (
+                          <>
+                            <h4 className="font-marcellus text-[#7A5A9E] mb-3 font-semibold text-base">{item.details.numerology.title || t('interpretation.numerologyTab')}</h4>
+                            <p className="text-[#5C4E4E] text-[15.5px] leading-relaxed">{item.details.numerology.analysis || t('history.noContentForTab')}</p>
+                          </>
+                        )}
                       </div>
                     </TabsContent>
                     
