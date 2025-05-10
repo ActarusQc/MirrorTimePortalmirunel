@@ -153,7 +153,7 @@ export default function History() {
   };
   
   return (
-    <div className="container mx-auto px-4 py-8 bg-[#FDF8F4] min-h-screen">
+    <div className="container mx-auto px-4 py-8 bg-[#F5ECE6] min-h-screen">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center">

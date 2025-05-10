@@ -35,31 +35,31 @@ export default function TimeForm({ onSubmit }: TimeFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="bg-white rounded-[12px] shadow-card p-6 transition-all duration-300 hover:shadow-lg fade-in-card">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="bg-white rounded-[12px] shadow-card p-6 border border-[#D8C3A5] transition-all duration-300 hover:shadow-lg fade-in-card">
         <FormField
           control={form.control}
           name="time"
           render={({ field }) => (
             <FormItem className="mb-6">
-              <FormLabel className="block text-primary mb-2 font-medium tracking-wide">{t('timeForm.label')}</FormLabel>
+              <FormLabel className="block text-[#6A4F6B] mb-3 font-semibold tracking-wide text-base">{t('timeForm.label')}</FormLabel>
               <div className="relative">
                 <FormControl>
                   <Input
                     {...field}
                     type="time"
-                    className="time-input w-full px-4 py-3 border border-[#D8C3A5]/50 rounded-[12px] focus:outline-none focus:ring-2 focus:ring-primary text-lg bg-[#FDF8F4]/50"
+                    className="time-input w-full px-4 py-3 border-2 border-[#D8C3A5] rounded-[12px] focus:outline-none focus:ring-2 focus:ring-[#9F84B5]/30 focus:border-[#9F84B5] text-xl bg-[#F5ECE6]/30 shadow-form text-[#6A4F6B] font-medium"
                     placeholder="HH:MM"
                   />
                 </FormControl>
                 <button
                   type="submit"
-                  className="absolute right-3 top-3 text-primary hover:text-secondary transition-all duration-300 hover-scale"
+                  className="absolute right-3 top-2.5 text-[#9F84B5] hover:text-[#8A6C9F] transition-all duration-300 hover-scale"
                   aria-label={t('timeForm.searchAriaLabel')}
                 >
-                  <Search className="h-5 w-5" />
+                  <Search className="h-6 w-6" />
                 </button>
               </div>
-              <FormMessage className="text-error text-sm mt-1" />
+              <FormMessage className="text-[#F44336] text-sm mt-2 font-medium" />
             </FormItem>
           )}
         />

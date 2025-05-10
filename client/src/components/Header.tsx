@@ -77,21 +77,28 @@ export default function Header() {
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="p-0 h-10 w-10 rounded-full" aria-label="User menu">
-                  <Avatar className="h-8 w-8 bg-primary/30 cursor-pointer">
-                    <AvatarFallback>{getInitials(user.username)}</AvatarFallback>
+                <Button 
+                  variant="ghost" 
+                  className="p-0 h-10 w-10 rounded-full border-2 border-white/40 shadow-sm" 
+                  aria-label="User menu"
+                >
+                  <Avatar className="h-8 w-8 bg-white cursor-pointer">
+                    <AvatarFallback className="text-[#9F84B5] font-bold">{getInitials(user.username)}</AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem className="md:hidden" onClick={handleShowHistory}>
-                  <History className="h-4 w-4 mr-2" />
-                  <span>{t('header.historyButton')}</span>
+              <DropdownMenuContent align="end" className="border-[#D8C3A5]/50 bg-white/95 shadow-card">
+                <DropdownMenuItem className="md:hidden focus:bg-[#F5ECE6] focus:text-[#6A4F6B]" onClick={handleShowHistory}>
+                  <History className="h-5 w-5 mr-2 text-[#9F84B5]" />
+                  <span className="text-[#6A4F6B] font-medium">{t('header.historyButton')}</span>
                 </DropdownMenuItem>
-                <DropdownMenuSeparator className="md:hidden" />
-                <DropdownMenuItem onClick={handleLogout}>
-                  <LogOut className="h-4 w-4 mr-2" />
-                  <span>{t('header.logoutButton')}</span>
+                <DropdownMenuSeparator className="md:hidden bg-[#D8C3A5]/30" />
+                <DropdownMenuItem 
+                  onClick={handleLogout}
+                  className="focus:bg-[#F5ECE6] focus:text-[#6A4F6B]"
+                >
+                  <LogOut className="h-5 w-5 mr-2 text-[#9F84B5]" />
+                  <span className="text-[#6A4F6B] font-medium">{t('header.logoutButton')}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -102,13 +109,13 @@ export default function Header() {
             <Button
               onClick={handleShowLoginModal}
               variant="ghost"
-              className="text-sm md:text-base bg-white bg-opacity-20 hover:bg-opacity-30 text-white mr-2"
+              className="text-sm md:text-base bg-white bg-opacity-25 hover:bg-opacity-40 text-white mr-3 font-medium shadow-sm px-5 py-2 border border-white/20"
             >
               {t('header.loginButton')}
             </Button>
             <Button
               onClick={handleShowSignupModal}
-              className="text-sm md:text-base bg-accent text-dark hover:bg-opacity-90"
+              className="text-sm md:text-base bg-[#F5B7B1] text-[#6A4F6B] hover:bg-[#F5B7B1]/90 font-medium shadow-sm px-5 py-2"
             >
               {t('header.signupButton')}
             </Button>
