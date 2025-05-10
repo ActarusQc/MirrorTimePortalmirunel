@@ -52,7 +52,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log("Received request to save history item");
       
       // Extract data from the request body
-      const { userId, time, type, thoughts, details } = req.body;
+      let { userId, time, type, thoughts, details } = req.body;
+      
+      // Ensure userId is a safe integer
+      const maxSafeInteger = 2147483647; // PostgreSQL integer limit
+      if (typeof userId === 'number' && userId > maxSafeInteger) {
+        console.log("User ID too large, using modulo operation to get a smaller ID");
+        userId = userId % maxSafeInteger;
+      }
       
       console.log("Request data:", { 
         userId, time, type, 

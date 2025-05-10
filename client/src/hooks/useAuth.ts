@@ -38,6 +38,16 @@ export function AuthProvider(props: { children: ReactNode }) {
     if (storedUser) {
       try {
         const parsedUser = JSON.parse(storedUser);
+        
+        // Check if the ID is too large (exceeds PostgreSQL integer limit)
+        if (parsedUser.id && parsedUser.id > 2147483647) {
+          // Generate a smaller ID that is safe for the database
+          parsedUser.id = Math.floor(Math.random() * 1000000) + 1;
+          // Update localStorage with the fixed ID
+          localStorage.setItem('mirrorTime_user', JSON.stringify(parsedUser));
+          console.log('Fixed user ID to be database-compatible');
+        }
+        
         setUser(parsedUser);
         setIsLoggedIn(true);
       } catch (e) {
@@ -80,8 +90,9 @@ export function AuthProvider(props: { children: ReactNode }) {
     }
     
     // Create new user
+    // Use a smaller number for the ID to avoid integer overflow in the database
     const newUser = {
-      id: Date.now(), // Simple way to generate unique IDs
+      id: Math.floor(Math.random() * 1000000) + 1, // Generate a smaller ID
       username,
       password, // In a real app, this would be hashed on the server
       email,
