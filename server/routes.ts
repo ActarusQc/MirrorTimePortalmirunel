@@ -69,10 +69,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
       
       // First, ensure that the user exists in the database
-      const userExists = await storage.ensureUserExists(userId);
-      if (!userExists) {
+      const userResult = await storage.ensureUserExists(userId);
+      if (!userResult.success) {
         console.error("Failed to ensure user exists");
         return res.status(400).json({ message: "Failed to validate user" });
+      }
+      
+      // If the user ID was remapped to a different database ID, use that
+      if (userResult.mappedId && userResult.mappedId !== userId) {
+        console.log(`Remapping user ID from ${userId} to ${userResult.mappedId}`);
+        userId = userResult.mappedId;
       }
       
       // Prepare the data for database insertion
