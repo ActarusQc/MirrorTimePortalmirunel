@@ -93,7 +93,9 @@
     "error": "Analysis Failed",
     "errorDetail": "There was an error generating your analysis. Please try again.",
     "savedToHistory": "Analysis Saved",
-    "savedToHistoryDetail": "The analysis has been saved to your history."
+    "savedToHistoryDetail": "The analysis has been saved to your history.",
+    "alreadySaved": "Already Saved",
+    "alreadySavedDetail": "This analysis was already saved to your history."
   },
   "language": {
     "english": "English",

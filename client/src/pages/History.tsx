@@ -202,7 +202,7 @@ export default function History() {
             </CardContent>
           </Card>
         ) : (
-          <ScrollArea className="max-h-[70vh]">
+          <div className="scrollable-history-container h-[80vh] overflow-y-auto pr-2 custom-scrollbar fade-in-card">
             {historyItems.map((item) => (
               <Card key={item.id} className="mb-6 border-[#D8C3A5]/30 rounded-[12px] bg-white/90 shadow-card fade-in-card">
                 <CardContent className="p-6">
@@ -284,7 +284,7 @@ export default function History() {
                 </CardContent>
               </Card>
             ))}
-          </ScrollArea>
+          </div>
         )}
       </div>
       

@@ -93,7 +93,9 @@
     "error": "Échec de l'Analyse",
     "errorDetail": "Une erreur s'est produite lors de la génération de votre analyse. Veuillez réessayer.",
     "savedToHistory": "Analyse Enregistrée",
-    "savedToHistoryDetail": "L'analyse a été enregistrée dans votre historique."
+    "savedToHistoryDetail": "L'analyse a été enregistrée dans votre historique.",
+    "alreadySaved": "Déjà Enregistrée",
+    "alreadySavedDetail": "Cette analyse a déjà été enregistrée dans votre historique."
   },
   "language": {
     "english": "Anglais",

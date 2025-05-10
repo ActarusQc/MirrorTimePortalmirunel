@@ -73,6 +73,35 @@ export default function TimeInterpretation({
       // If logged in, save the analysis to history
       if (isLoggedIn && user) {
         try {
+          // First check if there's already an entry for this time and message to prevent duplicates
+          const userId = user.id === 351811 ? 1 : user.id; // Use the same ID mapping as in History.tsx
+          const historyResponse = await fetch(`/api/history/${userId}`, {
+            credentials: 'include'
+          });
+          
+          if (historyResponse.ok) {
+            const historyItems = await historyResponse.json();
+            
+            // Check for potential duplicate - same time and thoughts within the last minute
+            const now = new Date();
+            const potentialDuplicate = historyItems.find((item: any) => 
+              item.time === time && 
+              item.thoughts === thoughts && 
+              // Only consider items saved in the last minute
+              (now.getTime() - new Date(item.savedAt).getTime() < 60000)
+            );
+            
+            // If there's already a recent entry for this time and message, don't create another one
+            if (potentialDuplicate) {
+              console.log('Skipping save - duplicate entry detected');
+              toast({
+                title: t('analysis.alreadySaved'),
+                description: t('analysis.alreadySavedDetail'),
+              });
+              return;
+            }
+          }
+          
           // Create a special version of details for AI-generated analysis
           const aiDetails = {
             spiritual: {
