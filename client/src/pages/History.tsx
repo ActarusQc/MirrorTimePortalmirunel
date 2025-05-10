@@ -66,17 +66,23 @@ export default function History() {
       const data = await response.json();
       
       // Parse the details JSON for each item
-      const processedData = data.map((item: any) => ({
-        ...item,
+      const processedData = data.map((item: any) => {
         // Parse the details field if it exists and is a string
-        details: item.details && typeof item.details === 'string' 
+        const parsedDetails = item.details && typeof item.details === 'string' 
           ? JSON.parse(item.details) 
           : item.details || {
               spiritual: { title: '', description: '' },
               angel: { name: '', message: '' },
               numerology: { title: '', analysis: '' }
-            }
-      }));
+            };
+        
+        console.log("History item details:", parsedDetails);
+        
+        return {
+          ...item,
+          details: parsedDetails
+        };
+      });
       
       setHistoryItems(processedData);
       
@@ -252,11 +258,11 @@ export default function History() {
                     <TabsContent value="angel" className="mt-4">
                       <div className="bg-[#EFE7DC] p-6 rounded-[12px] border border-[#D8C3A5]/30 shadow-md">
                         <h4 className="font-marcellus text-[#7A5A9E] mb-3 font-semibold text-base">
-                          {item.details.isAiGenerated ? t('interpretation.angelTab') : (item.details.angel.name || t('interpretation.angelTab'))}
+                          {item.details.angel?.name || t('interpretation.angelTab')}
                         </h4>
                         <p className="text-[#5C4E4E] text-[15.5px] leading-relaxed">
                           {/* Always show the message if it exists, otherwise show "No content available" */}
-                          {item.details.angel.message || t('history.noContentForTab')}
+                          {item.details.angel?.message || t('history.noContentForTab')}
                         </p>
                       </div>
                     </TabsContent>
@@ -264,11 +270,11 @@ export default function History() {
                     <TabsContent value="numerology" className="mt-4">
                       <div className="bg-[#EFE7DC] p-6 rounded-[12px] border border-[#D8C3A5]/30 shadow-md">
                         <h4 className="font-marcellus text-[#7A5A9E] mb-3 font-semibold text-base">
-                          {item.details.isAiGenerated ? t('interpretation.numerologyTab') : (item.details.numerology.title || t('interpretation.numerologyTab'))}
+                          {item.details.numerology?.title || t('interpretation.numerologyTab')}
                         </h4>
                         <p className="text-[#5C4E4E] text-[15.5px] leading-relaxed">
                           {/* Always show the analysis if it exists, otherwise show "No content available" */}
-                          {item.details.numerology.analysis || t('history.noContentForTab')}
+                          {item.details.numerology?.analysis || t('history.noContentForTab')}
                         </p>
                       </div>
                     </TabsContent>

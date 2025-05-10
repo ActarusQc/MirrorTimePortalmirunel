@@ -102,7 +102,7 @@ export default function TimeInterpretation({
             }
           }
           
-          // Create a special version of details for AI-generated analysis
+          // Create a special version of details for AI-generated analysis with proper content from the regular interpretation
           const aiDetails = {
             spiritual: {
               title: t('analysis.title'),
@@ -110,15 +110,17 @@ export default function TimeInterpretation({
               guidance: ''
             },
             angel: {
-              name: t('interpretation.angelTab'),
-              message: t('history.noContentForTab'),
-              guidance: ''
+              // Keep the non-AI angel data but update with AI-specific note
+              name: interpretation.angel.name,
+              message: interpretation.angel.message,
+              guidance: interpretation.angel.guidance
             },
             numerology: {
-              title: t('interpretation.numerologyTab'),
-              rootNumber: '',
-              mirrorEffect: '',
-              analysis: t('history.noContentForTab')
+              // Keep the non-AI numerology data
+              title: interpretation.numerology.title,
+              rootNumber: interpretation.numerology.rootNumber,
+              mirrorEffect: interpretation.numerology.mirrorEffect,
+              analysis: interpretation.numerology.analysis
             },
             isAiGenerated: true
           };
