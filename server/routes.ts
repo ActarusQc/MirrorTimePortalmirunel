@@ -101,13 +101,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       console.log("Prepared history data");
       
-      // Validate the data against the schema
-      const validatedData = insertHistoryItemSchema.parse(historyData);
-      console.log("Validation successful");
+      console.log("Raw history data before validation:", JSON.stringify(historyData, null, 2));
       
-      // Save to database
-      const savedItem = await storage.createHistoryItem(validatedData);
-      console.log("Item saved to database");
+      // Validate the data against the schema
+      try {
+        const validatedData = insertHistoryItemSchema.parse(historyData);
+        console.log("Validation successful, validated data:", JSON.stringify(validatedData, null, 2));
+        
+        // Save to database
+        const savedItem = await storage.createHistoryItem(validatedData);
+        console.log("Item saved to database:", JSON.stringify(savedItem, null, 2));
+      } catch (validationError) {
+        console.error("Schema validation error:", validationError);
+        throw validationError;
+      }
       
       return res.status(201).json(savedItem);
     } catch (error) {
