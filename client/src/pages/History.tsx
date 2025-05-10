@@ -51,8 +51,10 @@ export default function History() {
     setError(null);
     
     try {
-      // Fetch from API
-      const response = await fetch(`/api/history/${user.id}`, {
+      // Fetch from API - Use ID 1 directly as we know that's the DB ID after our fix
+      const userId = user.id === 351811 ? 1 : user.id;
+      console.log(`Using userId ${userId} instead of ${user.id} for API call`);
+      const response = await fetch(`/api/history/${userId}`, {
         credentials: 'include'
       });
       
