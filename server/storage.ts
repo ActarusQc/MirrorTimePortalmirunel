@@ -110,23 +110,44 @@ export class DatabaseStorage implements IStorage {
   }
   
   async deleteHistoryItem(id: number): Promise<void> {
-    await db
-      .delete(historyItems)
+    // First get the item details so we can delete any duplicates
+    const [item] = await db
+      .select()
+      .from(historyItems)
       .where(eq(historyItems.id, id));
+    
+    if (item) {
+      // Delete the specific item and any duplicates with same user, time and type
+      await db
+        .delete(historyItems)
+        .where(
+          and(
+            eq(historyItems.userId, item.userId),
+            eq(historyItems.time, item.time),
+            eq(historyItems.type, item.type)
+          )
+        );
+    } else {
+      // If item not found, just delete the one with the specific ID
+      await db
+        .delete(historyItems)
+        .where(eq(historyItems.id, id));
+    }
   }
   
   async findRecentDuplicateItem(userId: number, time: string, type: string): Promise<HistoryItem | undefined> {
     const oneMinuteAgo = new Date(Date.now() - 60 * 1000); // 1 minute ago
     
-    // Find items with same time and type for the user in the last minute
+    // Find items with same time and type for the user
     const [item] = await db
       .select()
       .from(historyItems)
       .where(
-        sql`${historyItems.userId} = ${userId} AND 
-            ${historyItems.time} = ${time} AND 
-            ${historyItems.type} = ${type} AND
-            ${historyItems.savedAt} > ${oneMinuteAgo.toISOString()}`
+        and(
+          eq(historyItems.userId, userId),
+          eq(historyItems.time, time),
+          eq(historyItems.type, type)
+        )
       )
       .orderBy(desc(historyItems.savedAt))
       .limit(1);

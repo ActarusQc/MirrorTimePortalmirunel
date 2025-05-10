@@ -116,7 +116,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const validatedData = insertHistoryItemSchema.parse(historyData);
         console.log("Validation successful, validated data:", JSON.stringify(validatedData, null, 2));
         
-        // Save to database
+        // Check for existing duplicate entries before saving
+        const existingItem = await storage.findRecentDuplicateItem(
+          validatedData.userId,
+          validatedData.time,
+          validatedData.type
+        );
+        
+        if (existingItem) {
+          console.log("Found duplicate item, returning existing item instead of creating new one:", existingItem);
+          // Return the existing item instead of creating a duplicate
+          return res.status(200).json({ 
+            ...existingItem,
+            duplicate: true,
+            message: "Item already exists in history" 
+          });
+        }
+        
+        // No duplicate found, save to database
         savedItem = await storage.createHistoryItem(validatedData);
         console.log("Item saved to database:", JSON.stringify(savedItem, null, 2));
       } catch (validationError) {
