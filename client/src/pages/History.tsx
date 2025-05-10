@@ -153,39 +153,43 @@ export default function History() {
   };
   
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 bg-[#FDF8F4] min-h-screen">
       <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center mb-8">
           <div className="flex items-center">
-            <h1 className="text-2xl font-playfair font-bold text-primary mr-3">{t('history.title')}</h1>
+            <h1 className="text-2xl font-marcellus font-bold text-[#B39BC8] mr-3 tracking-wide">{t('history.title')}</h1>
             <Button 
               variant="ghost" 
               size="sm" 
-              className="text-mediumgray" 
+              className="text-[#D8C3A5] hover:text-[#B39BC8] hover:bg-[#F5B7B1]/10 transition-all" 
               onClick={fetchHistory}
               disabled={isLoading}
             >
-              <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
+              <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''} hover-scale`} />
               <span className="sr-only">{t('common.refresh')}</span>
             </Button>
           </div>
-          <Button variant="outline" onClick={() => setLocation('/')}>
-            <X className="h-4 w-4 mr-2" />
+          <Button 
+            variant="outline" 
+            onClick={() => setLocation('/')}
+            className="border-[#D8C3A5] text-[#D8C3A5] hover:bg-[#F5B7B1]/10 hover:text-[#B39BC8] transition-all"
+          >
+            <X className="h-4 w-4 mr-2 hover-scale" />
             {t('common.close')}
           </Button>
         </div>
         
         {error && (
-          <div className="bg-amber-50 border border-amber-200 text-amber-800 px-4 py-3 rounded mb-6">
-            <p>{error}</p>
+          <div className="bg-[#F5B7B1]/20 border border-[#F5B7B1]/50 text-[#B39BC8] px-6 py-4 rounded-[12px] mb-6 shadow-sm fade-in-card">
+            <p className="font-light">{error}</p>
           </div>
         )}
         
         {isLoading ? (
-          <Card className="text-center py-10">
+          <Card className="text-center py-12 bg-white/70 border-[#D8C3A5]/30 rounded-[12px] shadow-card fade-in-card">
             <CardContent className="flex flex-col items-center">
-              <RefreshCw className="h-12 w-12 text-primary mb-3 animate-spin" />
-              <p className="text-mediumgray">{t('history.loading')}</p>
+              <RefreshCw className="h-12 w-12 text-[#B39BC8] mb-4 animate-spin" />
+              <p className="text-[#D8C3A5] font-light">{t('history.loading')}</p>
             </CardContent>
           </Card>
         ) : historyItems.length === 0 ? (
