@@ -13,6 +13,7 @@ import ShareInterpretation from '@/components/ShareInterpretation';
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import EzoicAd from '@/components/EzoicAd';
 
 interface TimeInterpretationProps {
   time: string;
@@ -494,6 +495,11 @@ export default function TimeInterpretation({
                   )}
                 </div>
               )}
+              
+              {/* Ezoic Ad Placement */}
+              <div className="mt-8">
+                <EzoicAd placementId={101} />
+              </div>
             </div>
           </CardFooter>
         </Tabs>
