@@ -19,6 +19,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
 import { X, Clock, Trash2, RefreshCw } from 'lucide-react';
+import EzoicAd from '@/components/EzoicAd';
 
 interface HistoryItem {
   id: number;
@@ -306,6 +307,13 @@ export default function History() {
                 </CardContent>
               </Card>
             ))}
+          </div>
+        )}
+        
+        {/* Ezoic Ad Placement */}
+        {historyItems.length > 0 && (
+          <div className="mt-10 mb-4">
+            <EzoicAd placementId={102} />
           </div>
         )}
       </div>

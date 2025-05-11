@@ -8,6 +8,7 @@ import SignupModal from "@/components/auth/SignupModal";
 import { useAuth } from "@/hooks/useAuth";
 import { useTimeInterpretation } from "@/hooks/useTimeInterpretation";
 import { Interpretation } from "@/lib/timeUtils";
+import EzoicAd from "@/components/EzoicAd";
 
 export default function Home() {
   const { t } = useTranslation();
@@ -51,13 +52,18 @@ export default function Home() {
       </section>
 
       {/* Interpretation section */}
-      {time && interpretation && (
+      {time && interpretation ? (
         <TimeInterpretation 
           time={time}
           interpretation={interpretation}
           onShowLogin={handleShowLoginModal}
           onShowSignup={handleShowSignupModal}
         />
+      ) : (
+        /* Show ad only when no time interpretation is shown */
+        <div className="max-w-2xl mx-auto mt-16 mb-8">
+          <EzoicAd placementId={103} />
+        </div>
       )}
 
       {/* Auth modals */}
