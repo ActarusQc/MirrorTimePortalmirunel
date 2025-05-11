@@ -53,10 +53,10 @@ export default function TimeForm({ onSubmit }: TimeFormProps) {
                 </FormControl>
                 <button
                   type="submit"
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#9F84B5] hover:text-[#8A6C9F] transition-all duration-300 hover-scale"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#9F84B5] hover:text-[#8A6C9F] transition-all duration-300"
                   aria-label={t('timeForm.searchAriaLabel')}
                 >
-                  <Search className="h-6 w-6" />
+                  <Search className="h-6 w-6 transition-transform duration-300 hover:scale-110" />
                 </button>
               </div>
               <FormMessage className="text-[#F44336] text-sm mt-2 font-medium" />
