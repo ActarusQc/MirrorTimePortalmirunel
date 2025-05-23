@@ -1,0 +1,8 @@
+mysql-connector-python
+Flask
+SQLAlchemy
+Flask-SQLAlchemy
+python-dotenv
+openai
+pytest
+pytest-flask
